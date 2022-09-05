@@ -1,4 +1,6 @@
+#include "Application.hpp"
+
 int main()
 {
-    return 0;
+    return Application::GetInstance()->Run();
 }

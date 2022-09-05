@@ -1,5 +1,5 @@
-RMDIR /s /q build
+REM RMDIR /s /q build
 cmake -DGLFW_BUILD_DOCS=OFF -Bbuild -G "MinGW Makefiles"
 cd build
-make
+make -j 8
 start chip8-interpreter.exe

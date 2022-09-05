@@ -1,17 +1,21 @@
 #include <glad/glad.h>
 #include <glfw/glfw3.h>
 
+#include "Shader.hpp"
+#include "Settings.hpp"
+
 #pragma once
 class Application
 {
 private :
-    GLFWwindow* _window;
     static Application* _application;
 
+    GLFWwindow* _window;
+    
     Application();
 
 public :
-    static Application* GetInstance() const noexcept;
+    static Application* GetInstance() noexcept;
     
     int Run() const noexcept;
 };
