@@ -19,3 +19,5 @@ target_link_directories(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME}
     glfw
 )
+
+#config glad, imgui, glm
