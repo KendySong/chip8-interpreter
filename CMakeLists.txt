@@ -9,7 +9,7 @@ add_subdirectory(libraries/glfw)
 
 target_include_directories(${PROJECT_NAME}
     PUBLIC libraries/glfw/include
-    PUBLIC libraries/glad/include
+    PUBLIC libraries/glad/include/glad
 ) 
 
 target_link_directories(${PROJECT_NAME}
