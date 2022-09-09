@@ -1,7 +1,9 @@
+#include <ImGui/imgui.h>
+#include <ImGui/imgui_impl_glfw.h>
+#include <ImGui/imgui_impl_opengl3.h>
+
 #include <glad/glad.h>
 #include <glfw/glfw3.h>
-
-#include <glm/glm.hpp>
 
 #include "Shader.hpp"
 #include "Settings.hpp"
@@ -11,7 +13,6 @@ class Application
 {
 private :
     static Application* _application;
-
     GLFWwindow* _window;
     
     Application();

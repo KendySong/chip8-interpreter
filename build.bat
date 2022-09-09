@@ -1,4 +1,4 @@
-rem rmdir /s /q build
+ rmdir /s /q build
 
 cmake -DGLFW_BUILD_DOCS=OFF -Bbuild -G "MinGW Makefiles"
 cd build

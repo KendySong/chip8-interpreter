@@ -1,13 +1,14 @@
 cmake_minimum_required(VERSION 3.23)
 project(chip8-interpreter)
 
-file (GLOB_RECURSE SOURCE 
+file (GLOB_RECURSE SOURCE
     src/*.cpp 
     libraries/glad/src/*.c
+    libraries/ImGui/*.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SOURCE})
-include_directories(include)
+include_directories(include libraries)
 
 add_subdirectory(libraries/glfw)
 add_subdirectory(libraries/glm)
@@ -21,7 +22,10 @@ target_include_directories(${PROJECT_NAME}
 target_link_directories(${PROJECT_NAME}
     PUBLIC libraries/glfw 
     PUBLIC libraries/glad 
-    PUBLIC libraries/glm 
+    PUBLIC libraries/glm
 )
 
-target_link_libraries(${PROJECT_NAME} glfw glm)
+target_link_libraries(${PROJECT_NAME} 
+    glfw
+    glm
+)
