@@ -5,6 +5,9 @@ Application::Application()
 {
     glfwInit();
     _window = glfwCreateWindow(Settings::screenWidth, Settings::screenHeight, Settings::title, NULL, NULL);
+    glfwWindowHint(GL_MINOR_VERSION, 4);
+    glfwWindowHint(GL_MAJOR_VERSION, 4);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwMakeContextCurrent(_window);
 
     gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
