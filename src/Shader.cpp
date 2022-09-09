@@ -53,12 +53,14 @@ Shader::Shader(const char* vertexShaderPath, const char* fragmentShaderPath)
     if (!vertexCompileStatus)
     {
         glGetShaderInfoLog(vertexShader, sizeof(compileErrorMessage), NULL, compileErrorMessage);
+        std::cout << "[ERROR] vertex shader compile error" << "\n";
         std::cout << compileErrorMessage << "\n";
     }
 
     if (!fragmentCompileStatus)
     {
         glGetShaderInfoLog(vertexShader, sizeof(compileErrorMessage), NULL, compileErrorMessage);
+        std::cout << "[ERROR] fragment shader compile error" << "\n";
         std::cout << compileErrorMessage << "\n";
     }
 

@@ -12,6 +12,8 @@ Application::Application()
     glClearColor(0, 0, 0, 0);
 
     Shader shader("../resources/shader.vert", "../resources/shader.frag");
+
+    //glm::vec3(0, 0, 0);
 }
 
 Application* Application::GetInstance() noexcept
