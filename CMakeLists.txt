@@ -9,26 +9,19 @@ file (GLOB_RECURSE SOURCE
 add_executable(${PROJECT_NAME} ${SOURCE})
 include_directories(include)
 
-add_subdirectory(
-    libraries/glfw
-    libraries/glm
-)
+add_subdirectory(libraries/glfw)
+add_subdirectory(libraries/glm)
 
 target_include_directories(${PROJECT_NAME}
-    PRIVATE libraries/glfw/include 
-    PRIVATE libraries/glad/include
-    PRIVATE libraries/glm
-) 
+    PUBLIC libraries/glfw/include 
+    PUBLIC libraries/glad/include 
+    PUBLIC libraries/glm
+)
 
 target_link_directories(${PROJECT_NAME}
-    PRIVATE libraries/glfw
-    PRIVATE libraries/glad
-    PRIVATE libraries/glm
+    PUBLIC libraries/glfw 
+    PUBLIC libraries/glad 
+    PUBLIC libraries/glm 
 )
 
-target_link_libraries(${PROJECT_NAME}
-    PRIVATE glfw
-    PRIVATE glm_shared
-)
-
-#config imgui, glm
+target_link_libraries(${PROJECT_NAME} glfw glm)

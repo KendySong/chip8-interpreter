@@ -13,7 +13,7 @@ Application::Application()
 
     Shader shader("../resources/shader.vert", "../resources/shader.frag");
 
-    //glm::vec3(0, 0, 0);
+    glm::vec3(0, 0, 0);
 }
 
 Application* Application::GetInstance() noexcept

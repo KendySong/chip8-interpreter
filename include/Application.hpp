@@ -1,7 +1,7 @@
 #include <glad/glad.h>
 #include <glfw/glfw3.h>
 
-//#include <glm/glm.hpp>
+#include <glm/glm.hpp>
 
 #include "Shader.hpp"
 #include "Settings.hpp"
