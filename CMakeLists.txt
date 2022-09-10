@@ -29,3 +29,5 @@ target_link_libraries(${PROJECT_NAME}
     glfw
     glm
 )
+
+file (COPY ${CMAKE_SOURCE_DIR}/shaders DESTINATION ${CMAKE_SOURCE_DIR}/build)

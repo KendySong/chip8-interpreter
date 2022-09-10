@@ -16,7 +16,7 @@ Application::Application()
     glViewport(0, 0, Settings::screenWidth, Settings::screenHeight);
     glClearColor(0, 0, 0, 0);
 
-    Shader shader("../resources/shader.vert", "../resources/shader.frag");
+    Shader shader("shaders/vertex.vert", "shaders/vertex.frag");
 
     IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
