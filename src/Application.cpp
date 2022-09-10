@@ -16,15 +16,41 @@ Application::Application()
     glViewport(0, 0, Settings::screenWidth, Settings::screenHeight);
     glClearColor(0, 0, 0, 0);
 
-    Shader shader("shaders/vertex.vert", "shaders/vertex.frag");
-
+    //Load and init ImGui
     IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO(); 
-    (void)io;
+	ImGuiIO& io = ImGui::GetIO();
 	ImGui::StyleColorsDark();
 	ImGui_ImplGlfw_InitForOpenGL(_window, true);
 	ImGui_ImplOpenGL3_Init("#version 450");
+
+    //Store gui components
+    _guiComponents.reserve(5);
+    _guiComponents.push_back(&_cpuInfo);
+    _guiComponents.push_back(&_instructionDebug);
+    _guiComponents.push_back(&_keyboardHandler);
+    _guiComponents.push_back(&_memoryViewer);
+    _guiComponents.push_back(&_screen);
+
+    //Triangle
+    Shader shader("shaders/vertex.vert", "shaders/vertex.frag");
+    float vertices[]
+    {
+         0.0,  0.5, 0.0,
+         0.5, -0.5, 0.0,
+        -0.5, -0.5, 0.0
+    };
+    unsigned int vao = 0;
+    unsigned int vbo = 0;
+    glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
+    
+    glGenBuffers(1, &vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices, GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, false, 3 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
 }
 
 Application* Application::GetInstance() noexcept
@@ -37,25 +63,27 @@ Application* Application::GetInstance() noexcept
     return _application;
 }
 
-int Application::Run() const noexcept
+int Application::Run()
 {
+    //Main loop
     while (!glfwWindowShouldClose(_window))
     {
         glfwPollEvents();
 
         glClear(GL_COLOR_BUFFER_BIT);
+        glDrawArrays(GL_TRIANGLES, 0, 3);
 
         ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
 
-        ImGui::Begin("My name is window, ImGUI window");
-        ImGui::Text("hello");
-		ImGui::End();
-
+        for (size_t i = 0; i < _guiComponents.size(); i++)
+        {
+            _guiComponents[i]->HandleInterface();
+        }
+        
         ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
         glfwSwapBuffers(_window);
     }
     

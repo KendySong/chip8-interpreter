@@ -8,7 +8,13 @@ file (GLOB_RECURSE SOURCE
 )
 
 add_executable(${PROJECT_NAME} ${SOURCE})
-include_directories(include libraries)
+include_directories(
+    include 
+    include/Chip8
+    include/Render
+    include/Gui
+    libraries
+)
 
 add_subdirectory(libraries/glfw)
 add_subdirectory(libraries/glm)
