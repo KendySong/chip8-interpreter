@@ -32,6 +32,23 @@ Application::Application()
     _guiComponents.push_back(&_memoryViewer);
     _guiComponents.push_back(&_screen);
 
+   
+
+
+    //////////////////
+    glGenFramebuffers(1, &_fboScreen);
+    glBindFramebuffer(GL_FRAMEBUFFER, _fboScreen);
+    glClearColor(0.5, 0.5, 0.5, 1.0);
+
+    //glViewport
+    glGenTextures(1, &_textureScreen);
+    glBindTexture(GL_TEXTURE_2D, _textureScreen);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Settings::screenWidth, Settings::screenHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+    
+
     //Triangle
     Shader shader("shaders/vertex.vert", "shaders/vertex.frag");
     float vertices[]
@@ -51,6 +68,8 @@ Application::Application()
 
     glVertexAttribPointer(0, 3, GL_FLOAT, false, 3 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
+
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _textureScreen, 0);
 }
 
 Application* Application::GetInstance() noexcept
@@ -70,22 +89,48 @@ int Application::Run()
     {
         glfwPollEvents();
 
+        //Render
         glClear(GL_COLOR_BUFFER_BIT);
-        glDrawArrays(GL_TRIANGLES, 0, 3);
 
-        ImGui_ImplOpenGL3_NewFrame();
-		ImGui_ImplGlfw_NewFrame();
-		ImGui::NewFrame();
+        //RenderScreen();
 
-        for (size_t i = 0; i < _guiComponents.size(); i++)
-        {
-            _guiComponents[i]->HandleInterface();
-        }
-        
-        ImGui::Render();
-		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+        RenderGui();
+
         glfwSwapBuffers(_window);
     }
     
     glfwDestroyWindow(_window);
+}
+
+void Application::RenderGui()
+{
+    //maybe clear
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
+
+    for (size_t i = 0; i < _guiComponents.size(); i++)
+    {
+        _guiComponents[i]->HandleInterface();
+    }
+
+    glBindFramebuffer(GL_FRAMEBUFFER, _fboScreen);
+    glClear(GL_COLOR_BUFFER_BIT);
+    glDrawArrays(GL_TRIANGLES, 0, 3);
+    ImGui::Begin("TEST");
+    ImGui::GetWindowDrawList()->AddImage((void*)_textureScreen, ImGui::GetCursorScreenPos(), ImVec2(ImGui::GetCursorScreenPos().x + Settings::screenWidth/2, ImGui::GetCursorScreenPos().y + Settings::screenHeight/2), ImVec2(0, 1), ImVec2(1, 0));
+    ImGui::End();
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
+
+void Application::RenderScreen()
+{
+    glBindFramebuffer(GL_FRAMEBUFFER, _fboScreen);
+    glClear(GL_COLOR_BUFFER_BIT);
+    glDrawArrays(GL_TRIANGLES, 0, 3);
 }

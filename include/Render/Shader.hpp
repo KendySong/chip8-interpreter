@@ -8,7 +8,22 @@
 #pragma once
 class Shader
 {
-	//Attributes and properties
+public : 
+	/**
+	 * @brief Create shader program and bind it
+	 * 
+	 * @param vertexPath 
+	 * @param fragmentPath 
+	 */
+	Shader(const char* vertexPath, const char* fragmentPath);
+
+	/**
+	 * @brief Get the shader program id
+	 * 
+	 * @return shader program id
+	 */
+	unsigned int GetProgram() const noexcept;
+
 private :
 	unsigned int _vertex;
 	unsigned int _fragment;
@@ -21,9 +36,4 @@ private :
 	std::string _fragmentString;
 	const char* _vertexSource = "";
 	const char* _fragmentSource = "";
-
-public : 
-	Shader(const char* vertexPath, const char* fragmentPath);
-
-	unsigned int GetProgram() const noexcept;
 };

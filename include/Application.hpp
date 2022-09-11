@@ -38,6 +38,15 @@ public :
     int Run();
 
 private :
+    /**
+     * @brief Create new frame for imgui, 
+     * draw gui and get input
+     */
+    void RenderGui();
+
+    void RenderScreen();
+
+    //Attributes and properties
     static Application* _application;
     GLFWwindow* _window;  
 
@@ -48,4 +57,9 @@ private :
     KeyboardHandler _keyboardHandler;
     MemoryViewer _memoryViewer;
     Screen _screen;
+
+
+    //////////////////
+    unsigned int _fboScreen;
+    unsigned int _textureScreen;
 };
