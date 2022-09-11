@@ -13,6 +13,11 @@
 #include "Gui/Screen.hpp"
 
 #pragma once
+
+/**
+ * @brief Manage application running
+ * 
+ */
 class Application
 {
 private :

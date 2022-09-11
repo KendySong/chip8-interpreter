@@ -1,4 +1,9 @@
 #pragma once
+
+/**
+ * @brief Program settings,
+ * can be used everywhere
+ */
 struct Settings
 {
 public :

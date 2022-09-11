@@ -6,6 +6,11 @@
 #include <glad/glad.h>
 
 #pragma once
+
+/**
+ * @brief Load, create and use shader
+ * 
+ */
 class Shader
 {
 public : 

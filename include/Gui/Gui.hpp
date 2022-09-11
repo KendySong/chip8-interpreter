@@ -3,6 +3,11 @@
 #include <ImGui/imgui_impl_opengl3.h>
 
 #pragma once
+
+/**
+ * @brief Interface for gui components,
+ * HandleInterface is called on derived classes
+ */
 class Gui
 {
 public :
