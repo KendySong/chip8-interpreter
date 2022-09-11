@@ -10,6 +10,7 @@
 #include "Gui/InstructionDebug.hpp"
 #include "Gui/KeyboardHandler.hpp"
 #include "Gui/MemoryViewer.hpp"
+#include "Gui/Menu.hpp"
 #include "Gui/Screen.hpp"
 
 #pragma once
@@ -59,5 +60,6 @@ private :
     InstructionDebug _instructionDebug;
     KeyboardHandler _keyboardHandler;
     MemoryViewer _memoryViewer;
+    Menu _menu;
     Screen _screen;
 };

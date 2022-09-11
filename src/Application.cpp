@@ -20,6 +20,7 @@ Application::Application()
     IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGui::StyleColorsDark();
+    ImGui::GetIO().ConfigWindowsMoveFromTitleBarOnly = true;
 	ImGui_ImplGlfw_InitForOpenGL(_window, true);
 	ImGui_ImplOpenGL3_Init("#version 450");
 
@@ -30,6 +31,7 @@ Application::Application()
     _guiComponents.push_back(&_instructionDebug);
     _guiComponents.push_back(&_keyboardHandler);
     _guiComponents.push_back(&_memoryViewer);
+    _guiComponents.push_back(&_menu);
     _guiComponents.push_back(&_screen);
 }
 
