@@ -29,10 +29,12 @@ void Menu::HandleInterface()
     if (_isOpen)
     {
         ImGui::OpenPopup(_fileLoad);
+        _isOpen = false;
     }
 
     if (_fileDialog.showFileDialog(_fileLoad, imgui_addons::ImGuiFileBrowser::DialogMode::OPEN, ImVec2(700, 300), ".ch8"))
     {
         std::cout << _fileDialog.selected_path;
+        _isOpen = false;
     }
 }
