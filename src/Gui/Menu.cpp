@@ -1,5 +1,11 @@
 #include "Menu.hpp"
 
+Menu::Menu()
+{
+    _isOpen = false;
+    _fileLoad = "Load source code";
+}
+
 void Menu::HandleInterface()
 {
     ImGui::BeginMainMenuBar();
@@ -7,12 +13,7 @@ void Menu::HandleInterface()
     {
         if (ImGui::MenuItem("Load"))
         {
-
-        }
-
-        if (ImGui::MenuItem("Save"))
-        {
-
+            _isOpen = true;
         }
 
         ImGui::EndMenu();
@@ -24,4 +25,14 @@ void Menu::HandleInterface()
     }
 
     ImGui::EndMainMenuBar();
+
+    if (_isOpen)
+    {
+        ImGui::OpenPopup(_fileLoad);
+    }
+
+    if (_fileDialog.showFileDialog(_fileLoad, imgui_addons::ImGuiFileBrowser::DialogMode::OPEN, ImVec2(700, 300), ".ch8"))
+    {
+        std::cout << _fileDialog.selected_path;
+    }
 }

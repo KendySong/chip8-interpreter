@@ -5,6 +5,11 @@ file (GLOB_RECURSE SOURCE
     src/*.cpp 
     libraries/glad/src/*.c
     libraries/ImGui/*.cpp
+
+
+    libraries/FileBrowser/ImGuiFileBrowser.cpp
+
+
 )
 
 add_executable(${PROJECT_NAME} ${SOURCE})
@@ -14,6 +19,11 @@ include_directories(
     include/Render
     include/Gui
     libraries
+
+
+    libraries/FileBrowser
+
+
 )
 
 add_subdirectory(libraries/glfw)
@@ -23,6 +33,7 @@ target_include_directories(${PROJECT_NAME}
     PUBLIC libraries/glfw/include 
     PUBLIC libraries/glad/include 
     PUBLIC libraries/glm
+    PUBLIC libraries/FileBrowser/Dirent
 )
 
 target_link_directories(${PROJECT_NAME}
