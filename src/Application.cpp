@@ -27,6 +27,7 @@ Application::Application()
     //Init and store gui components
     _screen.Init();
     _guiComponents.reserve(5);
+    _guiComponents.push_back(&_consoleLog);
     _guiComponents.push_back(&_cpuInfo);
     _guiComponents.push_back(&_instructionDebug);
     _guiComponents.push_back(&_keyboardHandler);

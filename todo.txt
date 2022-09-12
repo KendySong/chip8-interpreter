@@ -1,0 +1,4 @@
+- doc gui components, consoleLog and codeLoader
+- implement log window into console log
+- consolelog have to communicate with other part of the program
+- when codeLoader or shader fail write into consoleLog

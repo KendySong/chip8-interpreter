@@ -6,6 +6,7 @@
 #include "Shader.hpp"
 #include "Settings.hpp"
 
+#include "Gui/ConsoleLog.hpp"
 #include "Gui/CpuInfo.hpp"
 #include "Gui/InstructionDebug.hpp"
 #include "Gui/KeyboardHandler.hpp"
@@ -56,6 +57,7 @@ private :
 
     //Instance gui components
     std::vector<Gui*> _guiComponents;
+    ConsoleLog _consoleLog;
     CpuInfo _cpuInfo;
     InstructionDebug _instructionDebug;
     KeyboardHandler _keyboardHandler;

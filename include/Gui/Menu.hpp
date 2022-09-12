@@ -1,7 +1,7 @@
-#include <iostream>
 #include <FileBrowser/ImGuiFileBrowser.h>
 
 #include "Gui.hpp"
+#include "../Chip8/CodeLoader.hpp"
 
 #pragma once
 

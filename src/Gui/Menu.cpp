@@ -32,9 +32,10 @@ void Menu::HandleInterface()
         _isOpen = false;
     }
 
-    if (_fileDialog.showFileDialog(_fileLoad, imgui_addons::ImGuiFileBrowser::DialogMode::OPEN, ImVec2(700, 300), ".ch8"))
+    if (_fileDialog.showFileDialog(_fileLoad, imgui_addons::ImGuiFileBrowser::DialogMode::OPEN, ImVec2(700, 500), ".ch8"))
     {
-        std::cout << _fileDialog.selected_path;
+        CodeLoader codeLoader;
+        codeLoader.LoadSourceCode(_fileDialog.selected_path.c_str());
         _isOpen = false;
     }
 }
