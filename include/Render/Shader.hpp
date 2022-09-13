@@ -1,9 +1,10 @@
 #include <string>
 #include <sstream>
 #include <fstream>
-#include <iostream>
 
 #include <glad/glad.h>
+
+#include "../Gui/ConsoleLog.hpp"
 
 #pragma once
 

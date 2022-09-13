@@ -13,7 +13,7 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath)
 	}
 	else
 	{
-		std::cout << "[ERROR] Vertex shader is not found\n";
+		ConsoleLog::GetInstance()->AddLog("[ERROR] Vertex shader is not found\n");
 		return;
 	}
 
@@ -27,7 +27,7 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath)
 	}
 	else
 	{
-		std::cout << "[ERROR] Fragment shader is not found\n";
+		ConsoleLog::GetInstance()->AddLog("[ERROR] Fragment shader is not found\n");
 		return;
 	}
 
@@ -44,17 +44,19 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath)
 	glGetShaderiv(_vertex, GL_COMPILE_STATUS, &success);
 	if (!success)
 	{
-		std::cout << "[ERROR] Vertex shader compilation failed\n";
+		ConsoleLog::GetInstance()->AddLog("[ERROR] Vertex shader compilation failed\n");
 		glGetShaderInfoLog(_vertex, sizeof(logError), NULL, logError);
-		std::cout << logError << "\n";
+		ConsoleLog::GetInstance()->AddLog(logError);
+		ConsoleLog::GetInstance()->AddLog("\n");
 	}
 
 	glGetShaderiv(_fragment, GL_COMPILE_STATUS, &success);
 	if (!success)
 	{
-		std::cout << "[ERROR] Fragment shader compilation failed\n";
+		ConsoleLog::GetInstance()->AddLog("[ERROR] Fragment shader compilation failed\n");
 		glGetShaderInfoLog(_fragment, sizeof(logError), NULL, logError);
-		std::cout << logError << "\n";
+		ConsoleLog::GetInstance()->AddLog(logError);
+		ConsoleLog::GetInstance()->AddLog("\n");
 	}
 
 	_program = glCreateProgram();

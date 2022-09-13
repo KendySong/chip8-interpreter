@@ -1,10 +1,16 @@
+#include <fstream>
+#include <sstream>
+
 #include <FileBrowser/ImGuiFileBrowser.h>
 
 #include "Gui.hpp"
-#include "../Chip8/CodeLoader.hpp"
 
 #pragma once
 
+/**
+ * @brief Display menu and load files
+ * 
+ */
 class Menu : public Gui
 {
 public :
@@ -20,8 +26,18 @@ public :
      */
     void HandleInterface();
 
+    /**
+     * @brief Display file dialog and load file,
+     * if fail log error into console
+     */
+    void ManageFileLoading();
+
 private :
     bool _isOpen;
-    const char* _fileLoad;
+    const char* _fileDialogName;
     imgui_addons::ImGuiFileBrowser _fileDialog;
+
+    std::ifstream _fileReader;
+    std::stringstream _fileStream;
 };
+

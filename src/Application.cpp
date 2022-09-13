@@ -26,8 +26,7 @@ Application::Application()
 
     //Init and store gui components
     _screen.Init();
-    _guiComponents.reserve(5);
-    _guiComponents.push_back(&_consoleLog);
+    _guiComponents.reserve(6);
     _guiComponents.push_back(&_cpuInfo);
     _guiComponents.push_back(&_instructionDebug);
     _guiComponents.push_back(&_keyboardHandler);
@@ -68,6 +67,7 @@ void Application::RenderGui()
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
 
+    ConsoleLog::GetInstance()->HandleInterface();
     for (size_t i = 0; i < _guiComponents.size(); i++)
     {
         _guiComponents[i]->HandleInterface();

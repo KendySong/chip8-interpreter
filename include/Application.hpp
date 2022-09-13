@@ -57,7 +57,6 @@ private :
 
     //Instance gui components
     std::vector<Gui*> _guiComponents;
-    ConsoleLog _consoleLog;
     CpuInfo _cpuInfo;
     InstructionDebug _instructionDebug;
     KeyboardHandler _keyboardHandler;

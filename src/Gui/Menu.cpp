@@ -3,7 +3,7 @@
 Menu::Menu()
 {
     _isOpen = false;
-    _fileLoad = "Load source code";
+    _fileDialogName = "Load source code";
 }
 
 void Menu::HandleInterface()
@@ -25,17 +25,30 @@ void Menu::HandleInterface()
     }
 
     ImGui::EndMainMenuBar();
+    ManageFileLoading();   
+}
 
+void Menu::ManageFileLoading()
+{
     if (_isOpen)
     {
-        ImGui::OpenPopup(_fileLoad);
+        ImGui::OpenPopup(_fileDialogName);
         _isOpen = false;
     }
 
-    if (_fileDialog.showFileDialog(_fileLoad, imgui_addons::ImGuiFileBrowser::DialogMode::OPEN, ImVec2(700, 500), ".ch8"))
+    //Manage chip8 code loading into program
+    if (_fileDialog.showFileDialog(_fileDialogName, imgui_addons::ImGuiFileBrowser::DialogMode::OPEN, ImVec2(700, 500), ".ch8"))
     {
-        CodeLoader codeLoader;
-        codeLoader.LoadSourceCode(_fileDialog.selected_path.c_str());
+        _fileReader.open( _fileDialog.selected_path.c_str());
+        if (_fileReader.is_open())
+        {
+            _fileStream << _fileReader.rdbuf();
+        }
+        else
+        {
+            
+        }
+
         _isOpen = false;
     }
 }
