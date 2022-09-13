@@ -10,6 +10,10 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath)
 		_vertexString = _vertexStream.str();
 		_vertexSource = _vertexString.c_str();
 		_shaderReader.close();
+
+		ConsoleLog::GetInstance()->AddLog("[INFO] ");
+		ConsoleLog::GetInstance()->AddLog(vertexPath);
+		ConsoleLog::GetInstance()->AddLog(" loaded\n");
 	}
 	else
 	{
@@ -24,6 +28,10 @@ Shader::Shader(const char* vertexPath, const char* fragmentPath)
 		_fragmentString = _fragmentStream.str();
 		_fragmentSource = _fragmentString.c_str();
 		_shaderReader.close();
+
+		ConsoleLog::GetInstance()->AddLog("[INFO] ");
+		ConsoleLog::GetInstance()->AddLog(fragmentPath);
+		ConsoleLog::GetInstance()->AddLog(" loaded\n");
 	}
 	else
 	{

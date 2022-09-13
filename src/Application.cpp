@@ -5,7 +5,7 @@ Application::Application()
 {
     //Create and configure window
     glfwInit();
-    _window = glfwCreateWindow(Settings::screenWidth, Settings::screenHeight, Settings::title, NULL, NULL);
+    _window = glfwCreateWindow(Settings::windowWidth, Settings::windowHeight, Settings::title, NULL, NULL);
     glfwWindowHint(GL_MINOR_VERSION, 4);
     glfwWindowHint(GL_MAJOR_VERSION, 4);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
@@ -14,7 +14,7 @@ Application::Application()
     //Load OpenGL and shaders
     gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
     Shader shader("shaders/vertex.vert", "shaders/vertex.frag");
-    glViewport(0, 0, Settings::screenWidth, Settings::screenHeight);
+    glViewport(0, 0, Settings::windowWidth, Settings::windowHeight);
 
     //Load and init ImGui
     IMGUI_CHECKVERSION();

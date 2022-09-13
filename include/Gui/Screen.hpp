@@ -1,3 +1,4 @@
+#include <glm/glm.hpp>
 #include <glad/glad.h>
 
 #include "Gui.hpp"
@@ -31,7 +32,10 @@ public :
     void HandleInterface(); 
 
 private :
+    void InitializeScreen();
+
     ImVec2 _reducedRatio;
+
     unsigned int _fbRender;
     unsigned int _textureRender;
 };

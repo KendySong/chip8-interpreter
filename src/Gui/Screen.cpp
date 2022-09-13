@@ -2,7 +2,8 @@
 
 void Screen::Init()
 {
-    _reducedRatio = ImVec2(Settings::screenWidth / 1.5f, Settings::screenHeight / 1.5f);
+    unsigned int screenWidth = Settings::windowWidth / 1.5f;
+    _reducedRatio = ImVec2(screenWidth, screenWidth / 2);
 
     glGenFramebuffers(1, &_fbRender);
     glBindFramebuffer(GL_FRAMEBUFFER, _fbRender);
@@ -10,33 +11,12 @@ void Screen::Init()
     //Texture that is display on the sub window
     glGenTextures(1, &_textureRender);
     glBindTexture(GL_TEXTURE_2D, _textureRender);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Settings::screenWidth, Settings::screenHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Settings::windowWidth, Settings::windowHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glClearColor(0, 0, 0, 1);
 
-    //Triangle
-    float vertices[]
-    {
-         0.0,  0.5, 0.0,
-         0.5, -0.5, 0.0,
-        -0.5, -0.5, 0.0
-    };
-    unsigned int vao = 0;
-    unsigned int vbo = 0;
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
-    
-    glGenBuffers(1, &vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices, GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, false, 3 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-
-    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _textureRender, 0);
-
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    InitializeScreen();
 }
 
 void Screen::HandleInterface()
@@ -56,5 +36,31 @@ void Screen::HandleInterface()
     );
     ImGui::End();
 
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+void Screen::InitializeScreen()
+{
+    //Triangle
+    float vertices[]
+    {
+         0.0,  0.5, 0.0,
+         0.5, -0.5, 0.0,
+        -0.5, -0.5, 0.0
+    };
+
+    unsigned int vao = 0;
+    unsigned int vbo = 0;
+    glGenVertexArrays(1, &vao);
+    glBindVertexArray(vao);
+    
+    glGenBuffers(1, &vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices, GL_STATIC_DRAW);
+
+    glVertexAttribPointer(0, 3, GL_FLOAT, false, 3 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _textureRender, 0);
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
