@@ -39,14 +39,17 @@ void Menu::ManageFileLoading()
     //Manage chip8 code loading into program
     if (_fileDialog.showFileDialog(_fileDialogName, imgui_addons::ImGuiFileBrowser::DialogMode::OPEN, ImVec2(700, 500), ".ch8"))
     {
-        _fileReader.open( _fileDialog.selected_path.c_str());
+        _fileReader.open(_fileDialog.selected_path.c_str());
         if (_fileReader.is_open())
         {
             _fileStream << _fileReader.rdbuf();
+            std::string log = "[INFO] " + _fileDialog.selected_path + " loaded\n";
+            ConsoleLog::GetInstance()->AddLog(log.c_str());
         }
         else
         {
-            
+            std::string log = "[ERROR] " + _fileDialog.selected_path + " cannot opened\n";
+            ConsoleLog::GetInstance()->AddLog(log.c_str());
         }
 
         _isOpen = false;

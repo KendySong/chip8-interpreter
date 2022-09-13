@@ -3,7 +3,9 @@
 
 #include <FileBrowser/ImGuiFileBrowser.h>
 
-#include "Gui.hpp"
+#include "ConsoleLog.hpp"
+
+#include <iostream>
 
 #pragma once
 
