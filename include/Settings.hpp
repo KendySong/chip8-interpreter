@@ -13,4 +13,6 @@ public :
 
     static unsigned int screenWidth;
     static unsigned int screenHeight;
+
+    static unsigned int fpsTextSpace;
 };

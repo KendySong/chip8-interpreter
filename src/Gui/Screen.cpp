@@ -18,6 +18,9 @@ void Screen::Init(unsigned int shaderID)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glClearColor(0, 0, 0, 1);
+
+    //To Remove
+    srand(0);
 }
 
 void Screen::HandleInterface()
@@ -29,9 +32,12 @@ void Screen::HandleInterface()
     {
         for (float y = 0; y < Settings::screenHeight; y++)
         {
-            glm::vec2 currentPosition(-1.0f + x  * _pixelSize.x, 1 - y * _pixelSize.y);
-            glUniform2fv(_positionUniform, 1, &currentPosition[0]);
-            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);         
+            if (rand() % 90 == 0)
+            {
+                glm::vec2 currentPosition(-1.0f + x  * _pixelSize.x, 1 - y * _pixelSize.y);
+                glUniform2fv(_positionUniform, 1, &currentPosition[0]);
+                glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);  
+            }              
         }      
     }
 

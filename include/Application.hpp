@@ -1,10 +1,14 @@
+#include <iostream>
+
 #include <vector>
 
 #include <glad/glad.h>
 #include <glfw/glfw3.h>
 
-#include "Shader.hpp"
 #include "Settings.hpp"
+#include "Timer.hpp"
+
+#include "Shader.hpp"
 
 #include "Gui/ConsoleLog.hpp"
 #include "Gui/CpuInfo.hpp"
@@ -53,7 +57,10 @@ private :
 
     //Attributes and properties
     static Application* _application;
-    GLFWwindow* _window;  
+    GLFWwindow* _window;
+    
+    unsigned int _fps;
+    Timer _timer;
 
     //Instance gui components
     std::vector<Gui*> _guiComponents;

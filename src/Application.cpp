@@ -3,6 +3,8 @@
 Application* Application::_application = nullptr;
 Application::Application()
 {
+    _fps = 0;
+
     //Create and configure window
     glfwInit();
     _window = glfwCreateWindow(Settings::windowWidth, Settings::windowHeight, Settings::title, NULL, NULL);
@@ -49,13 +51,21 @@ Application* Application::GetInstance() noexcept
 
 int Application::Run()
 {
+    
     //Main loop
     while (!glfwWindowShouldClose(_window))
     {
         glfwPollEvents();
 
+        //Count fps
+        _fps++;
+        if (_timer.GetElapsedTime() > 1)
+        {
+            _menu.SetFPS(_fps);
+            _fps = 0;
+            _timer.Restart();
+        }
         
-
         RenderGui();
         glfwSwapBuffers(_window);
     }

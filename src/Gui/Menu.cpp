@@ -2,8 +2,14 @@
 
 Menu::Menu()
 {
+    _fps = 0;
     _isOpen = false;
     _fileDialogName = "Load source code";
+
+    for (size_t i = 0; i < Settings::fpsTextSpace; i++)
+    {
+        _barSpace += ' ';
+    }
 }
 
 void Menu::HandleInterface()
@@ -23,6 +29,10 @@ void Menu::HandleInterface()
     {
         ImGui::EndMenu();
     }
+
+    ImGui::Text(_barSpace.c_str());
+    ImGui::Text("FPS :");
+    ImGui::Text(std::to_string(_fps).c_str());
 
     ImGui::EndMainMenuBar();
     ManageFileLoading();   
@@ -47,14 +57,7 @@ void Menu::ManageFileLoading()
             _fileReader.seekg(0, std::ios::beg);
             _fileReader.read(buffer, size);
             
-            //Load into mem
-            for (size_t i = 0; i < size; i++)
-            {
-                std::cout << std::hex << "0x" << +(unsigned char)buffer[i] << "\n";
-            }
-            
-
-            //delete[] buffer;
+            delete[] buffer;
             std::string log = "[INFO] " + _fileDialog.selected_path + " loaded\n";
             ConsoleLog::GetInstance()->AddLog(log.c_str());
         }
@@ -66,4 +69,9 @@ void Menu::ManageFileLoading()
 
         _isOpen = false;
     }
+}
+
+void Menu::SetFPS(int fps)
+{
+    _fps = fps;
 }

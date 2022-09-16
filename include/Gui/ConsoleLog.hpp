@@ -2,6 +2,8 @@
 
 #include "Gui.hpp"
 
+#include "Settings.hpp"
+
 #pragma once
 /**
  * @brief Receive and display logs

@@ -5,8 +5,6 @@
 
 #include "ConsoleLog.hpp"
 
-#include <iostream>
-
 #pragma once
 
 /**
@@ -34,7 +32,16 @@ public :
      */
     void ManageFileLoading();
 
+    /**
+     * @brief Set the number of fps
+     * 
+     */
+    void SetFPS(int fps);
+
 private :
+    int _fps;
+    std::string _barSpace;
+
     bool _isOpen;
     const char* _fileDialogName;
     imgui_addons::ImGuiFileBrowser _fileDialog;
