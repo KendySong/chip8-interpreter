@@ -49,16 +49,10 @@ public :
     int Run();
 
 private :
-    /**
-     * @brief Create new frame for imgui, 
-     * draw gui and get input
-     */
-    void RenderGui();
-
     //Attributes and properties
     static Application* _application;
     GLFWwindow* _window;
-    
+
     unsigned int _fps;
     Timer _timer;
 

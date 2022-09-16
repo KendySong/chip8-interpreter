@@ -66,27 +66,23 @@ int Application::Run()
             _timer.Restart();
         }
         
-        RenderGui();
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        glClear(GL_COLOR_BUFFER_BIT);
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+
+        ConsoleLog::GetInstance()->HandleInterface();
+        for (size_t i = 0; i < _guiComponents.size(); i++)
+        {
+            _guiComponents[i]->HandleInterface();
+        }
+
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
         glfwSwapBuffers(_window);
     }
     
     glfwDestroyWindow(_window);
-}
-
-void Application::RenderGui()
-{
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    glClear(GL_COLOR_BUFFER_BIT);
-    ImGui_ImplOpenGL3_NewFrame();
-    ImGui_ImplGlfw_NewFrame();
-    ImGui::NewFrame();
-
-    ConsoleLog::GetInstance()->HandleInterface();
-    for (size_t i = 0; i < _guiComponents.size(); i++)
-    {
-        _guiComponents[i]->HandleInterface();
-    }
-
-    ImGui::Render();
-    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
