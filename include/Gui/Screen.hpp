@@ -1,8 +1,13 @@
-#include <glm/glm.hpp>
-#include <glad/glad.h>
+#include <string>
+#include <array>
 
-#include "Gui.hpp"
+#include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
 #include "Settings.hpp"
+#include "ConsoleLog.hpp"
+#include "../Render/Shader.hpp"
 
 #pragma once
 
@@ -23,7 +28,7 @@ public :
      * @brief Create framebuffer for this component
      * and render into it
      */
-    void Init();
+    void Init(unsigned int shaderID);
 
     /**
      * @brief Render chip8 screen output
@@ -31,11 +36,16 @@ public :
      */
     void HandleInterface(); 
 
-private :
+    /**
+     * @brief Generate grid of pixels
+     * 
+     */
     void InitializeScreen();
 
+private :
+    glm::vec2 _pixelSize;
     ImVec2 _reducedRatio;
-
+    unsigned int _positionUniform;
     unsigned int _fbRender;
     unsigned int _textureRender;
 };

@@ -5,6 +5,8 @@
 
 #include "ConsoleLog.hpp"
 
+#include <iostream>
+
 #pragma once
 
 /**

@@ -1,7 +1,10 @@
 #include "Screen.hpp"
 
-void Screen::Init()
+void Screen::Init(unsigned int shaderID)
 {
+    _positionUniform = glGetUniformLocation(shaderID, "position");
+
+    _pixelSize = glm::vec2(2 / (float)Settings::screenWidth, 2 / (float)Settings::screenHeight);
     unsigned int screenWidth = Settings::windowWidth / 1.5f;
     _reducedRatio = ImVec2(screenWidth, screenWidth / 2);
 
@@ -15,15 +18,22 @@ void Screen::Init()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glClearColor(0, 0, 0, 1);
-
-    InitializeScreen();
 }
 
 void Screen::HandleInterface()
 {
     glBindFramebuffer(GL_FRAMEBUFFER, _fbRender);
     glClear(GL_COLOR_BUFFER_BIT);
-    glDrawArrays(GL_TRIANGLES, 0, 3);
+
+    for (float x = 0; x < Settings::screenWidth; x++)
+    {
+        for (float y = 0; y < Settings::screenHeight; y++)
+        {
+            glm::vec2 currentPosition(-1.0f + x  * _pixelSize.x, 1 - y * _pixelSize.y);
+            glUniform2fv(_positionUniform, 1, &currentPosition[0]);
+            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);         
+        }      
+    }
 
     ImGui::Begin("Chip8 Screen");
     ImGui::GetWindowDrawList()->AddImage
@@ -41,24 +51,35 @@ void Screen::HandleInterface()
 
 void Screen::InitializeScreen()
 {
-    //Triangle
-    float vertices[]
+    float vertices[] 
     {
-         0.0,  0.5, 0.0,
-         0.5, -0.5, 0.0,
-        -0.5, -0.5, 0.0
+        0.0,             0.0,
+        _pixelSize.x,    0.0,
+        _pixelSize.x,    -_pixelSize.y,
+        0.0,             -_pixelSize.y,
     };
+
+    unsigned int indices[]
+    { 
+        1, 2, 0,
+        2, 3, 0
+    };  
 
     unsigned int vao = 0;
     unsigned int vbo = 0;
+    unsigned int ebo = 0;
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
     
+    glGenBuffers(1, &ebo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER ,ebo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), &indices, GL_STATIC_DRAW);
+
     glGenBuffers(1, &vbo);
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices, GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 3, GL_FLOAT, false, 3 * sizeof(float), (void*)0);
+    glVertexAttribPointer(0, 2, GL_FLOAT, false, 2 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
 
     glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, _textureRender, 0);

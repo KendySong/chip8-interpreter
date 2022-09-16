@@ -13,7 +13,7 @@ Application::Application()
 
     //Load OpenGL and shaders
     gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-    Shader shader("shaders/vertex.vert", "shaders/vertex.frag");
+    Shader _shader("shaders/vertex.vert", "shaders/vertex.frag");
     glViewport(0, 0, Settings::windowWidth, Settings::windowHeight);
 
     //Load and init ImGui
@@ -24,15 +24,17 @@ Application::Application()
 	ImGui_ImplGlfw_InitForOpenGL(_window, true);
 	ImGui_ImplOpenGL3_Init("#version 450");
 
-    //Init and store gui components
-    _screen.Init();
+    //Init and store gui components  
+    _screen.Init(_shader.GetProgram());
+    _screen.InitializeScreen();
+
     _guiComponents.reserve(6);
     _guiComponents.push_back(&_cpuInfo);
     _guiComponents.push_back(&_instructionDebug);
     _guiComponents.push_back(&_keyboardHandler);
     _guiComponents.push_back(&_memoryViewer);
     _guiComponents.push_back(&_menu);
-    _guiComponents.push_back(&_screen);
+    _guiComponents.push_back(&_screen);   
 }
 
 Application* Application::GetInstance() noexcept
@@ -51,7 +53,9 @@ int Application::Run()
     while (!glfwWindowShouldClose(_window))
     {
         glfwPollEvents();
-    
+
+        
+
         RenderGui();
         glfwSwapBuffers(_window);
     }
