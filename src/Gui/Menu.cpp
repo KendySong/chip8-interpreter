@@ -56,7 +56,12 @@ void Menu::ManageFileLoading()
             char* buffer = new char[size];
             _fileReader.seekg(0, std::ios::beg);
             _fileReader.read(buffer, size);
-            
+
+            for (size_t i = 0; i < size; i++)
+            {
+                CPU::GetInstance()->GetMemory()[PROGRAM_START_LOC + i] = buffer[i];
+            }
+                       
             delete[] buffer;
             std::string log = "[INFO] " + _fileDialog.selected_path + " loaded\n";
             ConsoleLog::GetInstance()->AddLog(log.c_str());

@@ -3,6 +3,8 @@
 
 #include <FileBrowser/ImGuiFileBrowser.h>
 
+#include "../Chip8/CPU.hpp"
+
 #include "ConsoleLog.hpp"
 
 #pragma once
