@@ -5,6 +5,8 @@
 #include <glad/glad.h>
 #include <glfw/glfw3.h>
 
+#include "CPU.hpp"
+
 #include "Settings.hpp"
 #include "Timer.hpp"
 

@@ -3,7 +3,9 @@
 CPU* CPU::_cpu = nullptr;
 CPU::CPU()
 {
-    _pogramCounter = PROGRAM_START_LOC;
+    _isRunning = false;
+    memset(&_register, 0, sizeof(_register));
+    _programCounter = PROGRAM_START_LOC;
 
     std::uint8_t characters[]
     {
@@ -40,7 +42,37 @@ CPU* CPU::GetInstance()
     return _cpu;
 }
 
+void CPU::Update()
+{
+    if (_isRunning)
+    {
+        //Assemble 2 byte for getting raw op code
+        std::uint16_t opCode =  _memory[_programCounter];
+        opCode << 8;
+        opCode |= _memory[_programCounter + 1];
+
+        
+
+        //_programCounter += 2;
+    }
+}
+
 std::array<std::uint8_t, MEMORY_SIZE>& CPU::GetMemory() noexcept
 {
     return _memory;
+}
+
+std::array<std::uint8_t, REGISTER_SIZE>& CPU::GetRegister() noexcept
+{
+    return _register;
+}
+
+void CPU::Run() noexcept
+{
+    _isRunning = true;
+}
+
+void CPU::Pause() noexcept
+{
+    _isRunning = false;
 }

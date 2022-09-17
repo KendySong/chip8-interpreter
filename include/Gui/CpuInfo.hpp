@@ -1,5 +1,7 @@
 #include "Gui.hpp"
 
+#include "../Chip8/CPU.hpp"
+
 #pragma once
 
 /**

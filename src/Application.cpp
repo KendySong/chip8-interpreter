@@ -65,6 +65,8 @@ int Application::Run()
             _fps = 0;
             _timer.Restart();
         }
+
+        CPU::GetInstance()->Update();
         
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
         glClear(GL_COLOR_BUFFER_BIT);

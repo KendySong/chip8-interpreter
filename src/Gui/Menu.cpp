@@ -10,6 +10,8 @@ Menu::Menu()
     {
         _barSpace += ' ';
     }
+
+    CPU::GetInstance();
 }
 
 void Menu::HandleInterface()

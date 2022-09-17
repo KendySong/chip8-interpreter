@@ -3,11 +3,19 @@
 void InstructionDebug::HandleInterface()
 {
     ImGui::Begin("Instruction");
-    ImGui::Button("Start");
+    if (ImGui::Button("Start"))
+    {
+        CPU::GetInstance()->Run();
+    }
+
     ImGui::SameLine();
     ImGui::Button("Step by step");
     ImGui::SameLine();
-    ImGui::Button("Stop");
+    if (ImGui::Button("Stop"))
+    {
+        CPU::GetInstance()->Pause();
+    }
+
     ImGui::SameLine();
     ImGui::Button("Restart");
     ImGui::Separator();
