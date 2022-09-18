@@ -70,7 +70,7 @@ void Menu::ManageFileLoading()
         }
         else
         {
-            std::string log = "[ERROR] " + _fileDialog.selected_path + " cannot opened\n";
+            std::string log = "[ERROR] " + _fileDialog.selected_path + " cannot be opened\n";
             ConsoleLog::GetInstance()->AddLog(log.c_str());
         }
 

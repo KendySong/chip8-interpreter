@@ -3,7 +3,9 @@
 
 #include <iostream>
 
+#include "../Gui/ConsoleLog.hpp"
 #include "Settings.hpp"
+
 
 #pragma once
 class CPU
