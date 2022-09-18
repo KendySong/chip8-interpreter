@@ -16,37 +16,34 @@ CPU* CPU::GetInstance()
 }
 
 void CPU::Update()
-{
-    if (_isRunning)
+{   
+    if (_isRunning && _programCounter < Chip8::MEMORY_SIZE)
     {
-        if (_programCounter >= Chip8::MEMORY_SIZE)
+        //Assemble 2 byte for getting raw op code
+        std::uint16_t opCode =  _memory[_programCounter];
+        opCode <<= 8;
+        opCode |= _memory[_programCounter + 1];
+        _programCounter += 2;
+    
+        //Decode the instruction and execute him
+        std::uint16_t instruction = opCode & 0xF000;
+        switch (instruction)
         {
-            _isRunning = false;
-            ConsoleLog::GetInstance()->AddLog("[INFO] program execution finished\n");
-        }
-        else
-        {
-            //Assemble 2 byte for getting raw op code
-            std::uint16_t opCode =  _memory[_programCounter];
-            opCode <<= 8;
-            opCode |= _memory[_programCounter + 1];
-            _programCounter += 2;
-        
-            //Decode the instruction and execute him
-            std::uint16_t instruction = opCode & 0xF000;
-            switch (instruction)
-            {
-            //Jump
-            case 0x1000 :
-                _programCounter = opCode & 0x0FFF;
-                break;
+        //Jump
+        case 0x1000 :
+            _programCounter = opCode & 0x0FFF;
+            break;
 
-            default :           
-                std::string log = "[ERROR] instruction 0x" + std::to_string(opCode) + " not recognize\n";
-                ConsoleLog::GetInstance()->AddLog(log.c_str());
-                break;
-            }   
+        default :           
+            std::string log = "[ERROR] instruction 0x" + std::to_string(opCode) + " not recognize\n";
+            ConsoleLog::GetInstance()->AddLog(log.c_str());
+            break;
         }
+    }
+    else if (_isRunning && _programCounter >= Chip8::MEMORY_SIZE)
+    {
+        _isRunning = false;
+        ConsoleLog::GetInstance()->AddLog("[INFO] program execution finished\n");
     }
 }
 
