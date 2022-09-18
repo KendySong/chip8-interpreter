@@ -5,9 +5,13 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-#include "Settings.hpp"
+#include "../Chip8/CPU.hpp"
+
 #include "ConsoleLog.hpp"
+
 #include "../Render/Shader.hpp"
+
+#include "Settings.hpp"
 
 #pragma once
 

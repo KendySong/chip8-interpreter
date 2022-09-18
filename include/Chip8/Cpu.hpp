@@ -1,11 +1,9 @@
 #include <cstring>
 #include <array>
 
-#include <iostream>
-
 #include "../Gui/ConsoleLog.hpp"
-#include "Settings.hpp"
 
+#include "Settings.hpp"
 
 #pragma once
 class CPU
@@ -17,13 +15,15 @@ public :
 
     void Update();
 
-    std::array<std::uint8_t, REGISTER_SIZE>& GetRegister() noexcept;
-
-    std::array<std::uint8_t, MEMORY_SIZE>& GetMemory() noexcept;
-
     void Run() noexcept;
 
     void Pause() noexcept;
+
+    std::array<std::uint8_t, Chip8::REGISTER_SIZE>& GetRegister() noexcept;
+
+    std::array<std::uint8_t, Chip8::MEMORY_SIZE>& GetMemory() noexcept;
+
+    std::array<std::array<bool, Chip8::SCREEN_WIDTH>, Chip8::SCREEN_HEIGHT>& GetPixelRender() noexcept;
 
 private :
     static CPU* _cpu;
@@ -32,6 +32,8 @@ private :
     std::uint16_t _programCounter;
     std::uint16_t _index;
 
-    std::array<std::uint8_t, REGISTER_SIZE> _register;
-    std::array<std::uint8_t, MEMORY_SIZE> _memory;    
+    std::array<std::uint8_t, Chip8::REGISTER_SIZE> _register;
+    std::array<std::uint8_t, Chip8::MEMORY_SIZE> _memory;    
+
+    std::array<std::array<bool, Chip8::SCREEN_WIDTH>, Chip8::SCREEN_HEIGHT> _pixelRender;
 };

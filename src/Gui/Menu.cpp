@@ -61,7 +61,7 @@ void Menu::ManageFileLoading()
 
             for (size_t i = 0; i < size; i++)
             {
-                CPU::GetInstance()->GetMemory()[PROGRAM_START_LOC + i] = buffer[i];
+                CPU::GetInstance()->GetMemory()[Chip8::PROGRAM_START_LOC + i] = buffer[i];
             }
                        
             delete[] buffer;

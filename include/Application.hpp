@@ -1,16 +1,10 @@
-#include <iostream>
-
 #include <vector>
 
 #include <glad/glad.h>
 #include <glfw/glfw3.h>
 
 #include "CPU.hpp"
-
-#include "Settings.hpp"
-#include "Timer.hpp"
-
-#include "Shader.hpp"
+#include "../Chip8/Timer.hpp"
 
 #include "Gui/ConsoleLog.hpp"
 #include "Gui/CpuInfo.hpp"
@@ -19,6 +13,10 @@
 #include "Gui/MemoryViewer.hpp"
 #include "Gui/Menu.hpp"
 #include "Gui/Screen.hpp"
+
+#include "Shader.hpp"
+
+#include "Settings.hpp"
 
 #pragma once
 

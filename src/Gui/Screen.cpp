@@ -4,7 +4,7 @@ void Screen::Init(unsigned int shaderID)
 {
     _positionUniform = glGetUniformLocation(shaderID, "position");
 
-    _pixelSize = glm::vec2(2 / (float)Settings::screenWidth, 2 / (float)Settings::screenHeight);
+    _pixelSize = glm::vec2(2 / (float)Chip8::SCREEN_WIDTH, 2 / (float)Chip8::SCREEN_HEIGHT);
     unsigned int screenWidth = Settings::windowWidth / 1.5f;
     _reducedRatio = ImVec2(screenWidth, screenWidth / 2);
 
@@ -25,13 +25,16 @@ void Screen::HandleInterface()
     glBindFramebuffer(GL_FRAMEBUFFER, _fbRender);
     glClear(GL_COLOR_BUFFER_BIT);
 
-    for (float x = 0; x < Settings::screenWidth; x++)
+    for (float x = 0; x < Chip8::SCREEN_WIDTH; x++)
     {
-        for (float y = 0; y < Settings::screenHeight; y++)
+        for (float y = 0; y < Chip8::SCREEN_HEIGHT; y++)
         {
-            glm::vec2 currentPosition(-1.0f + x  * _pixelSize.x, 1 - y * _pixelSize.y);
-            glUniform2fv(_positionUniform, 1, &currentPosition[0]);
-            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);               
+            if (CPU::GetInstance()->GetPixelRender()[y][x])
+            {
+                glm::vec2 currentPosition(-1.0f + x  * _pixelSize.x, 1 - y * _pixelSize.y);
+                glUniform2fv(_positionUniform, 1, &currentPosition[0]);
+                glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+            }       
         }
     }
 

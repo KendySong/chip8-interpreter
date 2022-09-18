@@ -4,10 +4,14 @@ CPU* CPU::_cpu = nullptr;
 CPU::CPU()
 {
     _isRunning = false;
-    _programCounter = PROGRAM_START_LOC;
+    _programCounter = Chip8::PROGRAM_START_LOC;
 
     memset(&_register, 0, sizeof(_register));
     memset(&_memory, 0, sizeof(_memory));
+    for (size_t i = 0; i < _pixelRender.size(); i++)
+    {
+        std::fill(_pixelRender[i].begin(), _pixelRender[i].end(), false);
+    }
     
     std::uint8_t characters[]
     {
@@ -32,7 +36,7 @@ CPU::CPU()
     //Load font into memory (the main program is loaded from menu.cpp)
     for (size_t i = 0; i < sizeof(characters) / sizeof(std::uint8_t); i++)
     {
-        _memory[CHARACTER_START_LOC + i] = characters[i];
+        _memory[Chip8::CHARACTER_START_LOC + i] = characters[i];
     }
 }
 
@@ -55,37 +59,27 @@ void CPU::Update()
         opCode |= _memory[_programCounter + 1];
         _programCounter += 2;
      
+        //Decode the instruction and execute him
         std::uint16_t instruction = opCode & 0xF000;
         switch (instruction)
         {
+        //Jump
         case 0x1000 :
             _programCounter = opCode & 0x0FFF;
-            std::cout << _programCounter << "\n";
             break;
 
-        default :
-            std::string log = "[ERROR] instruction 0x" + std::to_string(instruction) + " not recognize\n";
+        default :           
+            std::string log = "[ERROR] instruction 0x" + std::to_string(opCode) + " not recognize\n";
             ConsoleLog::GetInstance()->AddLog(log.c_str());
             break;
-        }
-        
+        }   
 
-        if (_programCounter >= MEMORY_SIZE)
+        if (_programCounter >= Chip8::MEMORY_SIZE)
         {
             _isRunning = false;
             ConsoleLog::GetInstance()->AddLog("[INFO] program execution finished\n");
         }
     }
-}
-
-std::array<std::uint8_t, MEMORY_SIZE>& CPU::GetMemory() noexcept
-{
-    return _memory;
-}
-
-std::array<std::uint8_t, REGISTER_SIZE>& CPU::GetRegister() noexcept
-{
-    return _register;
 }
 
 void CPU::Run() noexcept
@@ -96,4 +90,19 @@ void CPU::Run() noexcept
 void CPU::Pause() noexcept
 {
     _isRunning = false;
+}
+
+std::array<std::uint8_t, Chip8::MEMORY_SIZE>& CPU::GetMemory() noexcept
+{
+    return _memory;
+}
+
+std::array<std::uint8_t, Chip8::REGISTER_SIZE>& CPU::GetRegister() noexcept
+{
+    return _register;
+}
+
+std::array<std::array<bool, Chip8::SCREEN_WIDTH>, Chip8::SCREEN_HEIGHT>& CPU::GetPixelRender() noexcept
+{
+    return _pixelRender;
 }
