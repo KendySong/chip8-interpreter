@@ -3,6 +3,65 @@
 CPU* CPU::_cpu = nullptr;
 CPU::CPU()
 {
+    Reset();
+}
+
+CPU* CPU::GetInstance()
+{
+    if (_cpu == nullptr)
+    {
+        _cpu = new CPU();
+    }
+    return _cpu;
+}
+
+void CPU::Update()
+{
+    if (_isRunning)
+    {
+        if (_programCounter >= Chip8::MEMORY_SIZE)
+        {
+            _isRunning = false;
+            ConsoleLog::GetInstance()->AddLog("[INFO] program execution finished\n");
+        }
+        else
+        {
+            //Assemble 2 byte for getting raw op code
+            std::uint16_t opCode =  _memory[_programCounter];
+            opCode <<= 8;
+            opCode |= _memory[_programCounter + 1];
+            _programCounter += 2;
+        
+            //Decode the instruction and execute him
+            std::uint16_t instruction = opCode & 0xF000;
+            switch (instruction)
+            {
+            //Jump
+            case 0x1000 :
+                _programCounter = opCode & 0x0FFF;
+                break;
+
+            default :           
+                std::string log = "[ERROR] instruction 0x" + std::to_string(opCode) + " not recognize\n";
+                ConsoleLog::GetInstance()->AddLog(log.c_str());
+                break;
+            }   
+        }
+    }
+}
+
+void CPU::Run() noexcept
+{
+    _isRunning = true;
+}
+
+void CPU::Pause() noexcept
+{
+    _isRunning = false;
+}
+
+void CPU::Reset() noexcept
+{
     _isRunning = false;
     _programCounter = Chip8::PROGRAM_START_LOC;
 
@@ -38,58 +97,6 @@ CPU::CPU()
     {
         _memory[Chip8::CHARACTER_START_LOC + i] = characters[i];
     }
-}
-
-CPU* CPU::GetInstance()
-{
-    if (_cpu == nullptr)
-    {
-        _cpu = new CPU();
-    }
-    return _cpu;
-}
-
-void CPU::Update()
-{
-    if (_isRunning)
-    {
-        //Assemble 2 byte for getting raw op code
-        std::uint16_t opCode =  _memory[_programCounter];
-        opCode <<= 8;
-        opCode |= _memory[_programCounter + 1];
-        _programCounter += 2;
-     
-        //Decode the instruction and execute him
-        std::uint16_t instruction = opCode & 0xF000;
-        switch (instruction)
-        {
-        //Jump
-        case 0x1000 :
-            _programCounter = opCode & 0x0FFF;
-            break;
-
-        default :           
-            std::string log = "[ERROR] instruction 0x" + std::to_string(opCode) + " not recognize\n";
-            ConsoleLog::GetInstance()->AddLog(log.c_str());
-            break;
-        }   
-
-        if (_programCounter >= Chip8::MEMORY_SIZE)
-        {
-            _isRunning = false;
-            ConsoleLog::GetInstance()->AddLog("[INFO] program execution finished\n");
-        }
-    }
-}
-
-void CPU::Run() noexcept
-{
-    _isRunning = true;
-}
-
-void CPU::Pause() noexcept
-{
-    _isRunning = false;
 }
 
 std::array<std::uint8_t, Chip8::MEMORY_SIZE>& CPU::GetMemory() noexcept

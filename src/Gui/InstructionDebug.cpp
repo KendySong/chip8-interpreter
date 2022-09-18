@@ -10,6 +10,7 @@ void InstructionDebug::HandleInterface()
 
     ImGui::SameLine();
     ImGui::Button("Step by step");
+    
     ImGui::SameLine();
     if (ImGui::Button("Stop"))
     {
@@ -17,7 +18,11 @@ void InstructionDebug::HandleInterface()
     }
 
     ImGui::SameLine();
-    ImGui::Button("Restart");
+    if (ImGui::Button("Restart"))
+    {
+        CPU::GetInstance()->Reset();
+    }
+
     ImGui::Separator();
     ImGui::End();
 }
