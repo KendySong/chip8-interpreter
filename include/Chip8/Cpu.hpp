@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstring>
 #include <array>
+#include <stack>
 
 #include "../Gui/ConsoleLog.hpp"
 
@@ -30,6 +31,13 @@ public :
     void Update();
 
     /**
+     * @brief Draw a sprite at the emplacement given in opCode
+     * 
+     * @param opCode decode and execute the instructions with settings
+     */
+    void DrawSprite(std::uint16_t opCode);
+
+    /**
      * @brief Set on the cpu
      * 
      */
@@ -52,6 +60,13 @@ public :
      * 
      */
     void ClearScreen() noexcept;
+
+    /**
+     * @brief Log the unknown instruction
+     * 
+     * @param instruction to log into log window 
+     */
+    void LogUnknownInstruction(std::uint16_t opCode) noexcept; 
 
     /**
      * @brief Allow gui display cpu register values
@@ -79,8 +94,10 @@ private :
 
     bool _isRunning;
     std::uint16_t _programCounter;
+    std::uint16_t _stackPointer;
     std::uint16_t _index;
 
+    std::stack<std::uint16_t> _stack;
     std::array<std::uint8_t, Chip8::REGISTER_SIZE> _register;
     std::array<std::uint8_t, Chip8::MEMORY_SIZE> _memory;    
 
