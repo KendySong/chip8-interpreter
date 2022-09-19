@@ -1,3 +1,4 @@
+#include <iostream>
 #include <cstring>
 #include <array>
 
@@ -45,6 +46,12 @@ public :
      * 
      */
     void Reset() noexcept;
+
+    /**
+     * @brief Set false for each pixel drawing
+     * 
+     */
+    void ClearScreen() noexcept;
 
     /**
      * @brief Allow gui display cpu register values

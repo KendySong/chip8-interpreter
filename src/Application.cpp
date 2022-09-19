@@ -88,5 +88,6 @@ int Application::Run()
     
     glfwDestroyWindow(_window);
     delete _application;
+    
     return EXIT_SUCCESS;
 }

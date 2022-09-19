@@ -26,9 +26,28 @@ void CPU::Update()
         _programCounter += 2;
     
         //Decode the instruction and execute him
-        std::uint16_t instruction = opCode & 0xF000;
-        switch (instruction)
+        switch (opCode & 0xF000)
         {
+        case 0x0000 :
+            switch (opCode & 0x000F)
+            {
+            case 0x0000 :
+                ClearScreen(); //cls
+                break;
+            
+            case 0x000E : 
+                //ret
+                break;
+            
+            default:
+                //=> sys addr
+                break;
+            }
+            break;
+
+
+
+
         //Jump
         case 0x1000 :
             _programCounter = opCode & 0x0FFF;
@@ -64,10 +83,7 @@ void CPU::Reset() noexcept
 
     memset(&_register, 0, sizeof(_register));
     memset(&_memory, 0, sizeof(_memory));
-    for (size_t i = 0; i < _pixelRender.size(); i++)
-    {
-        std::fill(_pixelRender[i].begin(), _pixelRender[i].end(), false);
-    }
+    ClearScreen();
     
     std::uint8_t characters[]
     {
@@ -93,6 +109,14 @@ void CPU::Reset() noexcept
     for (size_t i = 0; i < sizeof(characters) / sizeof(std::uint8_t); i++)
     {
         _memory[Chip8::CHARACTER_START_LOC + i] = characters[i];
+    }
+}
+
+void CPU::ClearScreen() noexcept
+{
+    for (size_t i = 0; i < _pixelRender.size(); i++)
+    {
+        std::fill(_pixelRender[i].begin(), _pixelRender[i].end(), false);
     }
 }
 
