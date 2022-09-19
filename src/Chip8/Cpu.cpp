@@ -91,31 +91,7 @@ void CPU::Update()
 
 void CPU::DrawSprite(std::uint16_t opCode)
 {
-    std::uint8_t xScreen = _register[(opCode & 0x0F00) >> 8] % Chip8::SCREEN_WIDTH;
-    std::uint8_t yScreen = _register[(opCode & 0x00F0) >> 4] % Chip8::SCREEN_HEIGHT;
-
-    _pixelRender[yScreen][xScreen] = true;
-
-    /*
-    _register[_register.size() - 1] = 0;
-
-    for (size_t y = 0; y < opCode & 0x000F; y++)
-    {
-        std::uint8_t sprite = _memory[_index + y];
-        for (size_t x = 0; x < 8; x++)
-        {
-            if (sprite & (0x0080 >> x) && _pixelRender[yScreen][xScreen])
-            {
-                _pixelRender[yScreen][xScreen] = false;
-                _register[_register.size() - 1] = 1;
-            }
-            else if (sprite & (0x0080 >> x) && !_pixelRender[yScreen][xScreen])
-            {
-                _pixelRender[yScreen][xScreen] = true;
-            } 
-        }
-    }
-    */
+    
 }
 
 void CPU::Run() noexcept

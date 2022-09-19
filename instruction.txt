@@ -32,3 +32,6 @@ Fx29 - LD F, Vx
 Fx33 - LD B, Vx
 Fx55 - LD [I], Vx
 Fx65 - LD Vx, [I]
+
+//Increment pc after switch
+//Tansform 2D pixel array to 1D
