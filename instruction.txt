@@ -35,4 +35,4 @@ Fx65 - LD Vx, [I]
 
 
 //Tansform 2D pixel array to 1D => Dxyn
-//Pass consolelog with vector and imgui::text
+//Display instruction with text buffer
