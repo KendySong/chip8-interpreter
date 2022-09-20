@@ -30,4 +30,6 @@ namespace Chip8
 
     static const unsigned int PROGRAM_START_LOC = 0x200;    //Program loading starting emplacement (load into _memory of cpu)
     static const unsigned int CHARACTER_START_LOC = 0x50;   //Character loading starting emplacement
+
+    static const unsigned int MAX_SPRITE_WIDTH = 8;
 };

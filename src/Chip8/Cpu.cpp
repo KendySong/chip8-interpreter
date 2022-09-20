@@ -73,6 +73,7 @@ void CPU::Update()
             _index = opCode & 0x0FFF;
             break;
 
+        //Draw sprite
         case 0xD000 :
             DrawSprite(opCode);
             break;
@@ -91,6 +92,31 @@ void CPU::Update()
 
 void CPU::DrawSprite(std::uint16_t opCode)
 {
+    std::uint8_t xScreen = _register[(opCode & 0x0F00) >> 8] % Chip8::SCREEN_WIDTH;
+    std::uint8_t yScreen = _register[(opCode & 0x00F0) >> 4] % Chip8::SCREEN_HEIGHT;
+    _register[_register.size() - 1] = 0;
+
+    std::uint16_t height = opCode & 0x000F;
+    for (size_t y = 0; y < height; y++)
+    {
+        std::uint8_t spriteByte = _memory[_index + y];
+        for (size_t x = 0; x < Chip8::MAX_SPRITE_WIDTH; x++)
+        {
+            if (xScreen + x < Chip8::SCREEN_WIDTH)
+            {
+                if ((spriteByte >> Chip8::MAX_SPRITE_WIDTH - x - 1) != 0 && _pixelRender[yScreen + y][xScreen + x])
+                {
+                    _pixelRender[yScreen + y][xScreen + x] = false;
+                    _register[_register.size() - 1] = 1;
+                }
+                else if (!_pixelRender[yScreen + y][xScreen + x] && (spriteByte >> Chip8::MAX_SPRITE_WIDTH - x - 1))
+                {
+                    _pixelRender[yScreen + y][xScreen + x] = true;
+                }
+            }         
+        }
+        
+    }
     
 }
 
