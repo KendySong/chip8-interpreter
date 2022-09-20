@@ -35,4 +35,4 @@ Fx65 - LD Vx, [I]
 
 
 //Tansform 2D pixel array to 1D => Dxyn
-//ScanF to log hex unknowm opCode
+//Pass consolelog with vector and imgui::text

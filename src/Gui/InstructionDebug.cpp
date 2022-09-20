@@ -24,5 +24,11 @@ void InstructionDebug::HandleInterface()
     }
 
     ImGui::Separator();
+
+    for (size_t i = 0; i < CPU::GetInstance()->GetMemory().size(); i++)
+    {
+        //display memory
+    }
+    
     ImGui::End();
 }
