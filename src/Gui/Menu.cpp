@@ -33,8 +33,7 @@ void Menu::HandleInterface()
     }
 
     ImGui::Text(_barSpace.c_str());
-    ImGui::Text("FPS :");
-    ImGui::Text(std::to_string(_fps).c_str());
+    ImGui::Text("FPS : %i", _fps);
 
     ImGui::EndMainMenuBar();
     ManageFileLoading();   
@@ -67,6 +66,7 @@ void Menu::ManageFileLoading()
             delete[] buffer;
             std::string log = "[INFO] " + _fileDialog.selected_path + " loaded\n";
             ConsoleLog::GetInstance()->AddLog(log.c_str());
+            _fileReader.close();
         }
         else
         {

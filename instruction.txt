@@ -1,12 +1,12 @@
-00E0 - CLS              => ok
-00EE - RET              => ok
-1nnn - JP addr          => ok
-2nnn - CALL addr        => ok
+00E0 - CLS                  => ok
+00EE - RET                  => ok
+1nnn - JP addr              => ok
+2nnn - CALL addr            => ok
 3xkk - SE Vx, byte
 4xkk - SNE Vx, byte
 5xy0 - SE Vx, Vy
-6xkk - LD Vx, byte      => ok
-7xkk - ADD Vx, byte     => ok
+6xkk - LD Vx, byte          => ok
+7xkk - ADD Vx, byte         => ok
 8xy0 - LD Vx, Vy
 8xy1 - OR Vx, Vy
 8xy2 - AND Vx, Vy
@@ -17,10 +17,10 @@
 8xy7 - SUBN Vx, Vy
 8xyE - SHL Vx {, Vy}
 9xy0 - SNE Vx, Vy
-Annn - LD I, addr       => ok
+Annn - LD I, addr           => ok
 Bnnn - JP V0, addr
 Cxkk - RND Vx, byte
-Dxyn - DRW Vx, Vy, nibble
+Dxyn - DRW Vx, Vy, nibble   => ok to verify
 Ex9E - SKP Vx
 ExA1 - SKNP Vx
 Fx07 - LD Vx, DT
@@ -33,5 +33,6 @@ Fx33 - LD B, Vx
 Fx55 - LD [I], Vx
 Fx65 - LD Vx, [I]
 
-//Increment pc after switch
-//Tansform 2D pixel array to 1D
+
+//Tansform 2D pixel array to 1D => Dxyn
+//ScanF to log hex unknowm opCode

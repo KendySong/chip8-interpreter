@@ -51,7 +51,6 @@ Application* Application::GetInstance() noexcept
 
 int Application::Run()
 {
-    
     //Main loop
     while (!glfwWindowShouldClose(_window))
     {

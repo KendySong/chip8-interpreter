@@ -18,7 +18,7 @@ void InstructionDebug::HandleInterface()
     }
 
     ImGui::SameLine();
-    if (ImGui::Button("Restart"))
+    if (ImGui::Button("Reset"))
     {
         CPU::GetInstance()->Reset();
     }

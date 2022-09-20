@@ -114,8 +114,7 @@ void CPU::DrawSprite(std::uint16_t opCode)
                     _pixelRender[yScreen + y][xScreen + x] = true;
                 }
             }         
-        }
-        
+        }  
     }
     
 }
@@ -140,7 +139,7 @@ void CPU::Reset() noexcept
     memset(&_memory, 0, sizeof(_memory));
     ClearScreen();
     
-    std::uint8_t characters[]
+    std::array<std::uint8_t, 80> characters
     {
         0xF0, 0x90, 0x90, 0x90, 0xF0, // 0
         0x20, 0x60, 0x20, 0x20, 0x70, // 1
@@ -161,7 +160,7 @@ void CPU::Reset() noexcept
     };
 
     //Load font into memory (the main program is loaded from menu.cpp)
-    for (size_t i = 0; i < sizeof(characters) / sizeof(std::uint8_t); i++)
+    for (size_t i = 0; i < characters.size(); i++)
     {
         _memory[Chip8::CHARACTER_START_LOC + i] = characters[i];
     }
@@ -177,8 +176,21 @@ void CPU::ClearScreen() noexcept
 
 void CPU::LogUnknownInstruction(std::uint16_t opCode) noexcept
 {
-    std::string log = "[ERROR] instruction 0x" + std::to_string(opCode) + " not recognize\n";
+    std::stringstream stream;
+    stream << std::hex << opCode;
+    std::string log = "[ERROR] instruction 0x" + stream.str() + " not recognize\n";
     ConsoleLog::GetInstance()->AddLog(log.c_str());
+}
+
+std::uint16_t CPU::GetProgramCounter() noexcept
+{
+    return _programCounter;
+}
+
+
+std::uint16_t CPU::GetIndex() noexcept
+{
+    return _index;
 }
 
 std::array<std::uint8_t, Chip8::MEMORY_SIZE>& CPU::GetMemory() noexcept

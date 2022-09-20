@@ -1,4 +1,4 @@
-#include <iostream>
+#include <sstream>
 #include <cstring>
 #include <array>
 #include <stack>
@@ -69,6 +69,21 @@ public :
     void LogUnknownInstruction(std::uint16_t opCode) noexcept; 
 
     /**
+     * @brief Get the pc that contain index of current 
+     * executing instruction
+     * 
+     * @return pc that point into memory
+     */
+    std::uint16_t GetProgramCounter() noexcept;
+
+    /**
+     * @brief Get the index reguister
+     * 
+     * @return index that point into memory
+     */
+    std::uint16_t GetIndex() noexcept;
+
+    /**
      * @brief Allow gui display cpu register values
      * 
      * @return std::array<std::uint8_t, Chip8::REGISTER_SIZE>& 
@@ -94,7 +109,6 @@ private :
 
     bool _isRunning;
     std::uint16_t _programCounter;
-    std::uint16_t _stackPointer;
     std::uint16_t _index;
 
     std::stack<std::uint16_t> _stack;
