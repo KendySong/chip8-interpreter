@@ -1,3 +1,5 @@
+#include <sstream>
+
 #include <FileBrowser/ImGuiFileBrowser.h>
 
 #include "Gui.hpp"
@@ -41,6 +43,8 @@ public :
 
 private :
     static ConsoleLog* _consoleLog;
+
+    std::stringstream _stream;
     ImGuiTextBuffer _textBuffer;
     imgui_addons::ImGuiFileBrowser _fileDialog;
 };

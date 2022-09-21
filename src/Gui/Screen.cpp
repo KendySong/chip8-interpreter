@@ -5,7 +5,7 @@ void Screen::Init(unsigned int shaderID)
     _positionUniform = glGetUniformLocation(shaderID, "position");
 
     _pixelSize = glm::vec2(2 / (float)Chip8::SCREEN_WIDTH, 2 / (float)Chip8::SCREEN_HEIGHT);
-    unsigned int screenWidth = Settings::windowWidth / 1.5f;
+    unsigned int screenWidth = Settings::windowWidth / 1.75f;
     _reducedRatio = ImVec2(screenWidth, screenWidth / 2);
 
     glGenFramebuffers(1, &_fbRender);

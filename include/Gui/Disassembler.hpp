@@ -1,3 +1,6 @@
+#include <sstream>
+#include <stdio.h>
+
 #include "../Chip8/CPU.hpp"
 
 #include "Gui.hpp"
@@ -8,19 +11,22 @@
  * @brief Display instructions of the chip8 code
  * and their addresses
  */
-class InstructionDebug : public Gui
+class Disassembler : public Gui
 {
 public :
     /**
      * @brief Construct a new Instruction Debug object
      * 
      */
-    InstructionDebug() = default;
+    Disassembler();
 
     /**
      * @brief Render instructions of the chip8 code 
      * and their addresses 
      */
     void HandleInterface();
+
 private :
+    std::stringstream _streamHex;
+    ImGuiTextBuffer _textBuffer;
 };

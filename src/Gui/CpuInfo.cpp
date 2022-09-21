@@ -7,9 +7,12 @@ void CpuInfo::HandleInterface()
     ImGui::Text("I  : %x", CPU::GetInstance()->GetIndex());
     ImGui::Separator();
 
-    for (size_t i = 0; i < CPU::GetInstance()->GetRegister().size(); i++)
+    ImGui::Columns(2, "registers");
+    for (int i = 0; i < CPU::GetInstance()->GetRegister().size(); i++)
     {
-        ImGui::Text("V[%x] %x", i, CPU::GetInstance()->GetRegister()[i]); 
-    }    
+        ImGui::Text("V[%X] %X", i, CPU::GetInstance()->GetRegister()[i]);
+        ImGui::NextColumn();
+    }
+
     ImGui::End(); 
 }

@@ -176,10 +176,9 @@ void CPU::ClearScreen() noexcept
 
 void CPU::LogUnknownInstruction(std::uint16_t opCode) noexcept
 {
-    std::stringstream stream;
-    stream << std::hex << opCode;
-    std::string log = "[ERROR] instruction 0x" + stream.str() + " not recognize\n";
-    ConsoleLog::GetInstance()->AddLog(log.c_str());
+    char errorMessage[42];
+    snprintf(errorMessage, sizeof(errorMessage), "[ERROR] instruction 0x%X not recognize\n", opCode);
+    ConsoleLog::GetInstance()->AddLog(errorMessage);
 }
 
 std::uint16_t CPU::GetProgramCounter() noexcept

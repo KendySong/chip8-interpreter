@@ -30,13 +30,14 @@ Application::Application()
     _screen.Init(_shader.GetProgram());
     _screen.InitializeScreen();
 
-    _guiComponents.reserve(6);
+    _guiComponents.reserve(7);
     _guiComponents.push_back(&_cpuInfo);
-    _guiComponents.push_back(&_instructionDebug);
+    _guiComponents.push_back(&_disassembler);
     _guiComponents.push_back(&_keyboardHandler);
     _guiComponents.push_back(&_memoryViewer);
     _guiComponents.push_back(&_menu);
-    _guiComponents.push_back(&_screen);   
+    _guiComponents.push_back(&_screen); 
+    _guiComponents.push_back(&_stackViewer);
 }
 
 Application* Application::GetInstance() noexcept

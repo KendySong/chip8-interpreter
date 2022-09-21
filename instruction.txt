@@ -33,6 +33,10 @@ Fx33 - LD B, Vx
 Fx55 - LD [I], Vx
 Fx65 - LD Vx, [I]
 
-
 //Tansform 2D pixel array to 1D => Dxyn
 //Display instruction with text buffer
+
+//Block minimze and movements
+ImGui::SetNextWindowPos(ImVec2(315, 586));
+ImGui::SetNextWindowSizeConstraints(ImVec2(768, 314), ImVec2(768, Settings::windowHeight));
+ImGui::Begin("Console", NULL, ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse);

@@ -8,11 +8,12 @@
 
 #include "Gui/ConsoleLog.hpp"
 #include "Gui/CpuInfo.hpp"
-#include "Gui/InstructionDebug.hpp"
+#include "Gui/Disassembler.hpp"
 #include "Gui/KeyboardHandler.hpp"
 #include "Gui/MemoryViewer.hpp"
 #include "Gui/Menu.hpp"
 #include "Gui/Screen.hpp"
+#include "Gui/StackViewer.hpp"
 
 #include "Shader.hpp"
 
@@ -59,9 +60,10 @@ private :
     //Instance gui components
     std::vector<Gui*> _guiComponents;
     CpuInfo _cpuInfo;
-    InstructionDebug _instructionDebug;
+    Disassembler _disassembler;
     KeyboardHandler _keyboardHandler;
     MemoryViewer _memoryViewer;
     Menu _menu;
     Screen _screen;
+    StackViewer _stackViewer;
 };

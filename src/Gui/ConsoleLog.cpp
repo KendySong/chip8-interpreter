@@ -12,7 +12,6 @@ ConsoleLog* ConsoleLog::GetInstance()
 
 void ConsoleLog::HandleInterface()
 {
-    ImGui::SetNextWindowSizeConstraints(ImVec2(768, 314), ImVec2(768, Settings::windowHeight));
     ImGui::Begin("Console");
 
     if (ImGui::Button("Clear"))

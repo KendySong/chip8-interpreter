@@ -22,5 +22,4 @@ public :
      * get from chip8 emulator
      */
     void HandleInterface();
-private :
 };
