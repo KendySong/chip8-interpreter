@@ -63,9 +63,24 @@ void CPU::Update()
             if (_register[opCode & 0x0F00 >> 8] == opCode & 0x00FF)
             {
                 _programCounter += 2;
-            }
-            
+            }    
             break;
+
+        //SNE Vx, byte
+        case 0x4000 :
+            if (_register[opCode & 0x0F00 >> 8] != opCode & 0x00FF)
+            {
+                _programCounter += 2;
+            }  
+            break;
+
+        //SE Vx, Vy
+        case 0x5000 :
+            if (_register[opCode & 0x0F00 >> 8] == _register[opCode & 0x00F0 >> 4])
+            {
+                _programCounter += 2;
+            } 
+            break; 
 
         //Set register X to NN
         case 0x6000 :
@@ -75,6 +90,77 @@ void CPU::Update()
         //Add NN to register X
         case 0x7000 :
             _register[opCode & 0x0F00] += opCode & 0x00FF;
+            break;
+
+
+        case 0x8000 :
+            switch (opCode & 0x000F)
+            {
+            //LD Vx, Vy
+            case 0x0000 :
+                _register[opCode & 0x0F00 >> 8] = _register[opCode & 0x00F0 >> 4];
+                break;
+
+            //OR Vx, Vy
+            case 0x0001 :
+                _register[opCode & 0x0F00 >> 8] =  _register[opCode & 0x0F00 >> 8] | _register[opCode & 0x00F0 >> 4];
+                break;
+
+            //AND Vx, Vy
+            case 0x0002 :
+                _register[opCode & 0x0F00 >> 8] =  _register[opCode & 0x0F00 >> 8] & _register[opCode & 0x00F0 >> 4];
+                break;
+
+            //XOR Vx, Vy
+            case 0x0003 :
+                _register[opCode & 0x0F00 >> 8] =  _register[opCode & 0x0F00 >> 8] ^ _register[opCode & 0x00F0 >> 4];
+                break;
+
+            //ADD Vx, Vy
+            case 0x0004 :       
+                _register[opCode & 0x0F00 >> 8] = _register[opCode & 0x0F00 >> 8] + _register[opCode & 0x00F0 >> 4];
+                if (_register[opCode & 0x0F00 >> 8] + _register[opCode & 0x00F0 >> 4] > 255)
+                {
+                    _register[Chip8::REGISTER_SIZE - 1] = 1;
+                }
+                else
+                {
+                    _register[Chip8::REGISTER_SIZE - 1] = 0;
+                }
+                break;
+
+            //SUB Vx, Vy
+            case 0x0005 :
+
+                break;
+
+            //SHR Vx {, Vy}
+            case 0x0006 :
+
+                break;
+
+            //SUBN Vx, Vy
+            case 0x0007 :
+
+                break;
+
+            //SHL Vx {, Vy}
+            case 0x000E :
+
+                break;
+            
+            default:
+                LogUnknownInstruction(opCode);
+                break;
+            }
+            break;
+
+        //SNE Vx, Vy
+        case 0x9000 :
+            if (_register[opCode & 0x0F00 >> 8] != _register[opCode & 0x00F0 >> 4])
+            {
+                _programCounter += 2;
+            }        
             break;
 
         //Set I to NNN
@@ -143,8 +229,8 @@ void CPU::DrawSprite(std::uint16_t opCode)
                 {
                     _pixelRender[yScreen + y][xScreen + x] = false;
                     _register[Chip8::REGISTER_SIZE - 1] = 1;
-                }               
-            }       
+                }
+            }   
             else
             {
                 break;

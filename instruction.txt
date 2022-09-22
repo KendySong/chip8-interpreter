@@ -3,20 +3,20 @@
 1nnn - JP addr              => ok
 2nnn - CALL addr            => ok
 3xkk - SE Vx, byte          => ok
-4xkk - SNE Vx, byte
-5xy0 - SE Vx, Vy
+4xkk - SNE Vx, byte         => ok
+5xy0 - SE Vx, Vy            => ok
 6xkk - LD Vx, byte          => ok
 7xkk - ADD Vx, byte         => ok
-8xy0 - LD Vx, Vy
-8xy1 - OR Vx, Vy
-8xy2 - AND Vx, Vy
-8xy3 - XOR Vx, Vy
-8xy4 - ADD Vx, Vy
+8xy0 - LD Vx, Vy            => ok
+8xy1 - OR Vx, Vy            => ok
+8xy2 - AND Vx, Vy           => ok
+8xy3 - XOR Vx, Vy           => ok
+8xy4 - ADD Vx, Vy           => ok
 8xy5 - SUB Vx, Vy
 8xy6 - SHR Vx {, Vy}
 8xy7 - SUBN Vx, Vy
 8xyE - SHL Vx {, Vy}
-9xy0 - SNE Vx, Vy
+9xy0 - SNE Vx, Vy           => ok
 Annn - LD I, addr           => ok
 Bnnn - JP V0, addr
 Cxkk - RND Vx, byte
@@ -32,7 +32,6 @@ Fx29 - LD F, Vx
 Fx33 - LD B, Vx
 Fx55 - LD [I], Vx
 Fx65 - LD Vx, [I]
-
 
 
 //Block minimze and movements
