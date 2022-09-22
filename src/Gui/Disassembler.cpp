@@ -1,16 +1,5 @@
 #include "Disassembler.hpp"
 
-Disassembler::Disassembler()
-{
-    for (size_t i = 0; i < CPU::GetInstance()->GetMemory().size(); i++)
-    {
-        char instructionAddress[6];
-        snprintf(instructionAddress, sizeof(instructionAddress), "0x%X", i);
-        _textBuffer.append(instructionAddress);
-        _textBuffer.append("\n");
-    }
-}
-
 void Disassembler::HandleInterface()
 {
     ImGui::Begin("Disassembler");
@@ -35,14 +24,8 @@ void Disassembler::HandleInterface()
     }
 
     ImGui::Separator();
+    ImGui::BeginChild("child");
 
-    ImGui::Columns(3, "instruction disassembled");
-    ImGui::TextUnformatted(_textBuffer.begin());
-    for (size_t i = 0; i < CPU::GetInstance()->GetMemory().size(); i++)
-    {
-        //Display memory
-    }
-    
-    
+    ImGui::EndChild();
     ImGui::End();
 }

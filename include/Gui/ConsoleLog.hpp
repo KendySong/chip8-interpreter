@@ -45,6 +45,6 @@ private :
     static ConsoleLog* _consoleLog;
 
     std::stringstream _stream;
-    ImGuiTextBuffer _textBuffer;
+    ImGuiTextBuffer _addressBuffer;
     imgui_addons::ImGuiFileBrowser _fileDialog;
 };

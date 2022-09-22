@@ -1,4 +1,3 @@
-#include <sstream>
 #include <stdio.h>
 
 #include "../Chip8/CPU.hpp"
@@ -18,15 +17,11 @@ public :
      * @brief Construct a new Instruction Debug object
      * 
      */
-    Disassembler();
+    Disassembler() = default;
 
     /**
      * @brief Render instructions of the chip8 code 
      * and their addresses 
      */
     void HandleInterface();
-
-private :
-    std::stringstream _streamHex;
-    ImGuiTextBuffer _textBuffer;
 };

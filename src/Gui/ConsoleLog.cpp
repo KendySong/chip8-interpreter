@@ -16,18 +16,17 @@ void ConsoleLog::HandleInterface()
 
     if (ImGui::Button("Clear"))
     {
-        _textBuffer.clear();
+        _addressBuffer.clear();
     }
 
     ImGui::Separator();
     ImGui::BeginChild("console log");
-    ImGui::TextUnformatted(_textBuffer.begin());
+    ImGui::TextUnformatted(_addressBuffer.begin());
     ImGui::EndChild();
-
     ImGui::End();
 }
 
 void ConsoleLog::AddLog(const char* log)
 {
-    _textBuffer.append(log);
+    _addressBuffer.append(log);
 }

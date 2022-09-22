@@ -47,15 +47,24 @@ void CPU::Update()
             }
             break;
 
-        //JMP
+        //JMP addr
         case 0x1000 :
             _programCounter = opCode & 0x0FFF;
             break;
 
-        //CALL
+        //CALL addr
         case 0x2000 :
             _stack.push(_programCounter);
             _programCounter = opCode & 0x0FFF;
+            break;
+
+        //SE Vx, byte
+        case 0x3000 :
+            if (_register[opCode & 0x0F00 >> 8] == opCode & 0x00FF)
+            {
+                _programCounter += 2;
+            }
+            
             break;
 
         //Set register X to NN
@@ -92,31 +101,56 @@ void CPU::Update()
 
 void CPU::DrawSprite(std::uint16_t opCode)
 {
+    /*
+    We get first x and y position in the screen
+    and we start draw sprite at this position.
+
+    We set on or off each pixel depending the
+    status of pixel and the current using bit
+    of the sprite.
+
+    Exemple of '2' sprite
+    ****    11110000
+       *    00010000
+    ****    11110000
+    *       10000000
+    ****    11110000
+    */
+
     std::uint8_t xScreen = _register[(opCode & 0x0F00) >> 8] % Chip8::SCREEN_WIDTH;
     std::uint8_t yScreen = _register[(opCode & 0x00F0) >> 4] % Chip8::SCREEN_HEIGHT;
-    _register[_register.size() - 1] = 0;
-
+    _register[Chip8::REGISTER_SIZE - 1] = 0;
+    
     std::uint16_t height = opCode & 0x000F;
     for (size_t y = 0; y < height; y++)
     {
-        std::uint8_t spriteByte = _memory[_index + y];
+        std::uint8_t spriteByte = _memory[_index + y]; //=> 11110000
+
+        //Draw sprite line
         for (size_t x = 0; x < Chip8::MAX_SPRITE_WIDTH; x++)
-        {
-            if (xScreen + x < Chip8::SCREEN_WIDTH)
+        {       
+            if (xScreen + x < Chip8::SCREEN_WIDTH && yScreen + y < Chip8::SCREEN_HEIGHT)
             {
-                if ((spriteByte >> Chip8::MAX_SPRITE_WIDTH - x - 1) != 0 && _pixelRender[yScreen + y][xScreen + x])
-                {
-                    _pixelRender[yScreen + y][xScreen + x] = false;
-                    _register[_register.size() - 1] = 1;
-                }
-                else if (!_pixelRender[yScreen + y][xScreen + x] && (spriteByte >> Chip8::MAX_SPRITE_WIDTH - x - 1))
+                //Get sprite pixel with AND mask and x position
+                std::uint8_t spritePixel = spriteByte & (0x80 >> x);
+
+                //Set on or off pixel
+                if (!_pixelRender[yScreen + y][xScreen + x] && spritePixel != 0)
                 {
                     _pixelRender[yScreen + y][xScreen + x] = true;
                 }
-            }         
+                else if (_pixelRender[yScreen + y][xScreen + x] && spritePixel != 0)
+                {
+                    _pixelRender[yScreen + y][xScreen + x] = false;
+                    _register[Chip8::REGISTER_SIZE - 1] = 1;
+                }               
+            }       
+            else
+            {
+                break;
+            }  
         }  
     }
-    
 }
 
 void CPU::Run() noexcept

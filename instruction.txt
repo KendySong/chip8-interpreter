@@ -2,7 +2,7 @@
 00EE - RET                  => ok
 1nnn - JP addr              => ok
 2nnn - CALL addr            => ok
-3xkk - SE Vx, byte
+3xkk - SE Vx, byte          => ok
 4xkk - SNE Vx, byte
 5xy0 - SE Vx, Vy
 6xkk - LD Vx, byte          => ok
@@ -20,7 +20,7 @@
 Annn - LD I, addr           => ok
 Bnnn - JP V0, addr
 Cxkk - RND Vx, byte
-Dxyn - DRW Vx, Vy, nibble   => ok to verify
+Dxyn - DRW Vx, Vy, nibble   => ok
 Ex9E - SKP Vx
 ExA1 - SKNP Vx
 Fx07 - LD Vx, DT
@@ -33,8 +33,7 @@ Fx33 - LD B, Vx
 Fx55 - LD [I], Vx
 Fx65 - LD Vx, [I]
 
-//Tansform 2D pixel array to 1D => Dxyn
-//Display instruction with text buffer
+
 
 //Block minimze and movements
 ImGui::SetNextWindowPos(ImVec2(315, 586));
