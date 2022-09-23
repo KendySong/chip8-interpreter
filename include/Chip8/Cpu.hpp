@@ -109,12 +109,11 @@ private :
     std::uint16_t _programCounter;
     std::uint16_t _index;
 
-    std::stack<std::uint16_t> _stack;
-    std::array<std::uint8_t, Chip8::MEMORY_SIZE> _memory;    
-
     std::uint16_t _x;                                                                       //First register index getting from instruction
     std::uint16_t _y;                                                                       //Second register index getting from instruction
+    std::stack<std::uint16_t> _stack;
     std::array<std::uint8_t, Chip8::REGISTER_SIZE> _register;
+    std::array<std::uint8_t, Chip8::MEMORY_SIZE> _memory;    
 
     std::array<std::array<bool, Chip8::SCREEN_WIDTH>, Chip8::SCREEN_HEIGHT> _pixelRender;   //2D array (each case represent if a case is on/off)
 };

@@ -267,9 +267,6 @@ void CPU::Pause() noexcept
 
 void CPU::Reset() noexcept
 {
-    _x = 0;
-    _y = 0;
-
     _isRunning = false;
     _index = 0;
     _programCounter = Chip8::PROGRAM_START_LOC;
