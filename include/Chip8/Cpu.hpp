@@ -64,7 +64,7 @@ public :
      * 
      * @param instruction to log into log window 
      */
-    void LogUnknownInstruction(std::uint16_t opCode) noexcept; 
+    void LogUnknownInstruction(std::uint16_t opCode) noexcept;
 
     /**
      * @brief Get the pc that contain index of current 

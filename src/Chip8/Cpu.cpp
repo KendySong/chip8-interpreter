@@ -92,7 +92,6 @@ void CPU::Update()
             _register[opCode & 0x0F00] += opCode & 0x00FF;
             break;
 
-
         case 0x8000 :
             switch (opCode & 0x000F)
             {
@@ -104,26 +103,26 @@ void CPU::Update()
             //OR Vx, Vy
             case 0x0001 :
                 _x = opCode & 0x0F00 >> 8;
-                _register[_x] =  _register[_x] | _register[opCode & 0x00F0 >> 4];
+                _register[_x] = _register[_x] | _register[opCode & 0x00F0 >> 4];
                 break;
 
             //AND Vx, Vy
             case 0x0002 :
                 _x = opCode & 0x0F00 >> 8;
-                _register[_x] =  _register[_x] & _register[opCode & 0x00F0 >> 4];
+                _register[_x] = _register[_x] & _register[opCode & 0x00F0 >> 4];
                 break;
 
             //XOR Vx, Vy
             case 0x0003 :
                 _x = opCode & 0x0F00 >> 8;
-                _register[_x] =  _register[_x] ^ _register[opCode & 0x00F0 >> 4];
+                _register[_x] = _register[_x] ^ _register[opCode & 0x00F0 >> 4];
                 break;
 
             //ADD Vx, Vy
             case 0x0004 :   
                 _x = opCode & 0x0F00 >> 8;
                 _y = opCode & 0x00F0 >> 4;
-                _register[_x] = _register[_x] + _register[_y];
+                _register[_x] += _register[_y];
                 _register[Chip8::REGISTER_SIZE - 1] = _register[_x] + _register[_y] > 255 ? 1 : 0;
                 break;
 
@@ -132,22 +131,38 @@ void CPU::Update()
                 _x = opCode & 0x0F00 >> 8;
                 _y = opCode & 0x00F0 >> 4;
                 _register[Chip8::REGISTER_SIZE - 1] = _register[_x] > _register[_y] ? 1 : 0;
-                _register[_x] = _register[_x] - _register[_y];  
+                _register[_x] -=_register[_y];  
                 break;
 
             //SHR Vx {, Vy}
             case 0x0006 :
+                _x = opCode & 0x0F00 >> 8;
+                _register[Chip8::REGISTER_SIZE - 1] = _register[_x] & 0x0001;
+                _register[_x] >>= 1;
                 
+                /* VIP COSMAC
+                _x = opCode & 0x0F00 >> 8;
+                _y = opCode & 0x00F0 >> 4;         
+                _register[Chip8::REGISTER_SIZE - 1] = _register[_x] & 0x0001;
+                _register[_x] = _register[_y];
+                _register[_x] >>= 1;
+                */
                 break;
 
             //SUBN Vx, Vy
             case 0x0007 :
-
+                _x = opCode & 0x0F00 >> 8;
+                _y = opCode & 0x00F0 >> 4;
+                _register[_x] = _register[_y] - _register[_x];
+                _register[Chip8::REGISTER_SIZE - 1] = _register[_y] > _register[_x] ? 1 : 0;
                 break;
 
             //SHL Vx {, Vy}
             case 0x000E :
-
+                _x = opCode & 0x0F00 >> 8;
+                _y = opCode & 0x00F0 >> 4;
+                _register[Chip8::REGISTER_SIZE - 1] = (_register[_x] >> 7) & 0x0001;
+                _register[_x] <<= 1;
                 break;
             
             default:
@@ -155,7 +170,7 @@ void CPU::Update()
                 break;
             }
             break;
-
+        
         //SNE Vx, Vy
         case 0x9000 :
             if (_register[opCode & 0x0F00 >> 8] != _register[opCode & 0x00F0 >> 4])
@@ -309,7 +324,6 @@ std::uint16_t CPU::GetProgramCounter() noexcept
 {
     return _programCounter;
 }
-
 
 std::uint16_t CPU::GetIndex() noexcept
 {

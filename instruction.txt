@@ -13,9 +13,9 @@
 8xy3 - XOR Vx, Vy           => ok
 8xy4 - ADD Vx, Vy           => ok
 8xy5 - SUB Vx, Vy           => ok
-8xy6 - SHR Vx {, Vy}
-8xy7 - SUBN Vx, Vy
-8xyE - SHL Vx {, Vy}
+8xy6 - SHR Vx {, Vy}        => ok
+8xy7 - SUBN Vx, Vy          => ok
+8xyE - SHL Vx {, Vy}        => ok
 9xy0 - SNE Vx, Vy           => ok
 Annn - LD I, addr           => ok
 Bnnn - JP V0, addr
