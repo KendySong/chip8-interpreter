@@ -13,7 +13,7 @@ public :
      * @brief Constructor
      * 
      */
-    KeyboardHandler() = default;
+    KeyboardHandler();
 
     /**
      * @brief Render the keyboard and 
@@ -21,5 +21,5 @@ public :
      */
     void HandleInterface();
 private :
-
+    ImVec2 _buttonSize;
 };

@@ -22,7 +22,7 @@
 9xy0 - SNE Vx, Vy           => ok
 Annn - LD I, addr           => ok
 Bnnn - JP V0, addr          => ok
-Cxkk - RND Vx, byte
+Cxkk - RND Vx, byte         => ok
 Dxyn - DRW Vx, Vy, nibble   => ok
 
 Ex9E - SKP Vx

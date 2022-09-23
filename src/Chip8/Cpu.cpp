@@ -189,9 +189,31 @@ void CPU::Update()
             _programCounter = (opCode & 0x0FFF) + _register[0];
             break;
 
-        //Draw sprite
+        //RND Vx, byte
+        case 0xC000 :
+            _register[opCode & 0x0F00 >> 8] = (rand() % 256) & (opCode & 0x00FF);
+            break;
+
+        //DRW Vx, Vy, nibble
         case 0xD000 :
             DrawSprite(opCode);
+            break;
+
+        case 0xE000 :
+            switch (opCode & 0x000F)
+            {
+            //SKP Vx
+            case 0x000E:
+                break;
+
+            //SKNP Vx
+            case 0x0001:
+                break;
+            
+            default:
+                LogUnknownInstruction(opCode);
+                break;
+            }
             break;
 
         default :           
@@ -259,43 +281,6 @@ void CPU::DrawSprite(std::uint16_t opCode)
             }  
         }  
     }
-
-    /*
-    std::uint8_t xScreen = _register[(opCode & 0x0F00) >> 8] % Chip8::SCREEN_WIDTH;
-    std::uint8_t yScreen = _register[(opCode & 0x00F0) >> 4] % Chip8::SCREEN_HEIGHT;
-    _register[Chip8::REGISTER_SIZE - 1] = 0;
-    
-    std::uint16_t height = opCode & 0x000F;
-    for (size_t y = 0; y < height; y++)
-    {
-        std::uint8_t spriteByte = _memory[_index + y]; //=> 11110000
-
-        //Draw sprite line
-        for (size_t x = 0; x < Chip8::MAX_SPRITE_WIDTH; x++)
-        {       
-            if (xScreen + x < Chip8::SCREEN_WIDTH && yScreen + y < Chip8::SCREEN_HEIGHT)
-            {
-                //Get sprite pixel with AND mask and x position
-                std::uint8_t spritePixel = spriteByte & (0x80 >> x);
-
-                //Set on or off pixel
-                if (!_pixelRender[yScreen + y][xScreen + x] && spritePixel != 0)
-                {
-                    _pixelRender[yScreen + y][xScreen + x] = true;
-                }
-                else if (_pixelRender[yScreen + y][xScreen + x] && spritePixel != 0)
-                {
-                    _pixelRender[yScreen + y][xScreen + x] = false;
-                    _register[Chip8::REGISTER_SIZE - 1] = 1;
-                }
-            }   
-            else
-            {
-                break;
-            }  
-        }  
-    }
-    */
 }
 
 void CPU::Run() noexcept
@@ -310,6 +295,7 @@ void CPU::Pause() noexcept
 
 void CPU::Reset() noexcept
 {
+    srand(time(nullptr));
     _isRunning = false;
     _index = 0;
     _programCounter = Chip8::PROGRAM_START_LOC;
