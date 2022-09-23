@@ -103,40 +103,41 @@ void CPU::Update()
 
             //OR Vx, Vy
             case 0x0001 :
-                _register[opCode & 0x0F00 >> 8] =  _register[opCode & 0x0F00 >> 8] | _register[opCode & 0x00F0 >> 4];
+                _x = opCode & 0x0F00 >> 8;
+                _register[_x] =  _register[_x] | _register[opCode & 0x00F0 >> 4];
                 break;
 
             //AND Vx, Vy
             case 0x0002 :
-                _register[opCode & 0x0F00 >> 8] =  _register[opCode & 0x0F00 >> 8] & _register[opCode & 0x00F0 >> 4];
+                _x = opCode & 0x0F00 >> 8;
+                _register[_x] =  _register[_x] & _register[opCode & 0x00F0 >> 4];
                 break;
 
             //XOR Vx, Vy
             case 0x0003 :
-                _register[opCode & 0x0F00 >> 8] =  _register[opCode & 0x0F00 >> 8] ^ _register[opCode & 0x00F0 >> 4];
+                _x = opCode & 0x0F00 >> 8;
+                _register[_x] =  _register[_x] ^ _register[opCode & 0x00F0 >> 4];
                 break;
 
             //ADD Vx, Vy
-            case 0x0004 :       
-                _register[opCode & 0x0F00 >> 8] = _register[opCode & 0x0F00 >> 8] + _register[opCode & 0x00F0 >> 4];
-                if (_register[opCode & 0x0F00 >> 8] + _register[opCode & 0x00F0 >> 4] > 255)
-                {
-                    _register[Chip8::REGISTER_SIZE - 1] = 1;
-                }
-                else
-                {
-                    _register[Chip8::REGISTER_SIZE - 1] = 0;
-                }
+            case 0x0004 :   
+                _x = opCode & 0x0F00 >> 8;
+                _y = opCode & 0x00F0 >> 4;
+                _register[_x] = _register[_x] + _register[_y];
+                _register[Chip8::REGISTER_SIZE - 1] = _register[_x] + _register[_y] > 255 ? 1 : 0;
                 break;
 
             //SUB Vx, Vy
             case 0x0005 :
-
+                _x = opCode & 0x0F00 >> 8;
+                _y = opCode & 0x00F0 >> 4;
+                _register[Chip8::REGISTER_SIZE - 1] = _register[_x] > _register[_y] ? 1 : 0;
+                _register[_x] = _register[_x] - _register[_y];  
                 break;
 
             //SHR Vx {, Vy}
             case 0x0006 :
-
+                
                 break;
 
             //SUBN Vx, Vy
@@ -251,6 +252,9 @@ void CPU::Pause() noexcept
 
 void CPU::Reset() noexcept
 {
+    _x = 0;
+    _y = 0;
+
     _isRunning = false;
     _index = 0;
     _programCounter = Chip8::PROGRAM_START_LOC;
