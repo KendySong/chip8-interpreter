@@ -1,5 +1,6 @@
 00E0 - CLS                  => ok
 00EE - RET                  => ok
+
 1nnn - JP addr              => ok
 2nnn - CALL addr            => ok
 3xkk - SE Vx, byte          => ok
@@ -7,6 +8,7 @@
 5xy0 - SE Vx, Vy            => ok
 6xkk - LD Vx, byte          => ok
 7xkk - ADD Vx, byte         => ok
+
 8xy0 - LD Vx, Vy            => ok
 8xy1 - OR Vx, Vy            => ok
 8xy2 - AND Vx, Vy           => ok
@@ -16,13 +18,16 @@
 8xy6 - SHR Vx {, Vy}        => ok
 8xy7 - SUBN Vx, Vy          => ok
 8xyE - SHL Vx {, Vy}        => ok
+
 9xy0 - SNE Vx, Vy           => ok
 Annn - LD I, addr           => ok
-Bnnn - JP V0, addr
+Bnnn - JP V0, addr          => ok
 Cxkk - RND Vx, byte
 Dxyn - DRW Vx, Vy, nibble   => ok
+
 Ex9E - SKP Vx
 ExA1 - SKNP Vx
+
 Fx07 - LD Vx, DT
 Fx0A - LD Vx, K
 Fx15 - LD DT, Vx

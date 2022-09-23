@@ -183,6 +183,11 @@ void CPU::Update()
         case 0xA000 :
             _index = opCode & 0x0FFF;
             break;
+            
+        //JP V0, addr
+        case 0xB000 :
+            _programCounter = (opCode & 0x0FFF) + _register[0];
+            break;
 
         //Draw sprite
         case 0xD000 :
@@ -221,6 +226,7 @@ void CPU::DrawSprite(std::uint16_t opCode)
 
     std::uint8_t xScreen = _register[(opCode & 0x0F00) >> 8] % Chip8::SCREEN_WIDTH;
     std::uint8_t yScreen = _register[(opCode & 0x00F0) >> 4] % Chip8::SCREEN_HEIGHT;
+
     _register[Chip8::REGISTER_SIZE - 1] = 0;
     
     std::uint16_t height = opCode & 0x000F;
@@ -253,6 +259,43 @@ void CPU::DrawSprite(std::uint16_t opCode)
             }  
         }  
     }
+
+    /*
+    std::uint8_t xScreen = _register[(opCode & 0x0F00) >> 8] % Chip8::SCREEN_WIDTH;
+    std::uint8_t yScreen = _register[(opCode & 0x00F0) >> 4] % Chip8::SCREEN_HEIGHT;
+    _register[Chip8::REGISTER_SIZE - 1] = 0;
+    
+    std::uint16_t height = opCode & 0x000F;
+    for (size_t y = 0; y < height; y++)
+    {
+        std::uint8_t spriteByte = _memory[_index + y]; //=> 11110000
+
+        //Draw sprite line
+        for (size_t x = 0; x < Chip8::MAX_SPRITE_WIDTH; x++)
+        {       
+            if (xScreen + x < Chip8::SCREEN_WIDTH && yScreen + y < Chip8::SCREEN_HEIGHT)
+            {
+                //Get sprite pixel with AND mask and x position
+                std::uint8_t spritePixel = spriteByte & (0x80 >> x);
+
+                //Set on or off pixel
+                if (!_pixelRender[yScreen + y][xScreen + x] && spritePixel != 0)
+                {
+                    _pixelRender[yScreen + y][xScreen + x] = true;
+                }
+                else if (_pixelRender[yScreen + y][xScreen + x] && spritePixel != 0)
+                {
+                    _pixelRender[yScreen + y][xScreen + x] = false;
+                    _register[Chip8::REGISTER_SIZE - 1] = 1;
+                }
+            }   
+            else
+            {
+                break;
+            }  
+        }  
+    }
+    */
 }
 
 void CPU::Run() noexcept
