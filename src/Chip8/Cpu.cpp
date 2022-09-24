@@ -204,10 +204,18 @@ void CPU::Update()
             {
             //SKP Vx
             case 0x000E:
+                if (_register[opCode & 0x0F00 >> 8] == _keyMap[_currentKeyDown] && _actionKey == 1)
+                {
+                    _programCounter += 2;
+                }                           
                 break;
 
             //SKNP Vx
             case 0x0001:
+                if (_register[opCode & 0x0F00 >> 8] != _keyMap[_currentKeyDown])
+                {
+                    _programCounter += 2;
+                }  
                 break;
             
             default:
@@ -274,7 +282,7 @@ void CPU::DrawSprite(std::uint16_t opCode)
                     _pixelRender[yScreen + y][xScreen + x] = false;
                     _register[Chip8::REGISTER_SIZE - 1] = 1;
                 }
-            }   
+            }
             else
             {
                 break;
@@ -296,7 +304,10 @@ void CPU::Pause() noexcept
 void CPU::Reset() noexcept
 {
     srand(time(nullptr));
+
     _isRunning = false;
+    _currentKeyDown = 0;
+    _actionKey = 0;
     _index = 0;
     _programCounter = Chip8::PROGRAM_START_LOC;
 
@@ -329,6 +340,27 @@ void CPU::Reset() noexcept
     {
         _memory[Chip8::CHARACTER_START_LOC + i] = characters[i];
     }
+
+    //Translate keyboard inputs
+    _keyMap[2] = 1;
+    _keyMap[3] = 2;
+    _keyMap[4] = 3;
+    _keyMap[5] = 0xC;
+
+    _keyMap[16] = 4;    //'q' scancode is 16 and we convert to the value in the chip8 keyboard
+    _keyMap[17] = 5;
+    _keyMap[18] = 6;
+    _keyMap[19] = 0xD;
+
+    _keyMap[30] = 7;
+    _keyMap[31] = 8;
+    _keyMap[32] = 9;
+    _keyMap[33] = 0xE;
+
+    _keyMap[44] = 0xA;
+    _keyMap[45] = 0;
+    _keyMap[46] = 0xB;
+    _keyMap[47] = 0xF;
 }
 
 void CPU::ClearScreen() noexcept
@@ -344,6 +376,12 @@ void CPU::LogUnknownInstruction(std::uint16_t opCode) noexcept
     char errorMessage[42];
     snprintf(errorMessage, sizeof(errorMessage), "[ERROR] instruction 0x%X not recognize\n", opCode);
     ConsoleLog::GetInstance()->AddLog(errorMessage);
+}
+
+void CPU::SetCurrentKeyInput(int keyCode, int actionKey) noexcept
+{
+    _currentKeyDown = keyCode;
+    _actionKey = actionKey;
 }
 
 std::uint16_t CPU::GetProgramCounter() noexcept

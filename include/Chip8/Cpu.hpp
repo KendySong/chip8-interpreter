@@ -1,3 +1,4 @@
+#include <map>
 #include <time.h>
 #include <array>
 #include <stack>
@@ -68,6 +69,13 @@ public :
     void LogUnknownInstruction(std::uint16_t opCode) noexcept;
 
     /**
+     * @brief Set the current key down
+     * 
+     * @param keyCode => emplacement of the key in the keyboard
+     */
+    void SetCurrentKeyInput(int keyCode, int actionKey) noexcept;
+
+    /**
      * @brief Get the pc that contain index of current 
      * executing instruction
      * 
@@ -113,6 +121,10 @@ private :
     std::uint16_t _x;                                                                       //First register index getting from instruction
     std::uint16_t _y;                                                                       //Second register index getting from instruction
     std::array<std::uint8_t, Chip8::REGISTER_SIZE> _register;
+
+    std::map<std::uint8_t, std::uint8_t> _keyMap;
+    int _currentKeyDown;
+    int _actionKey;
 
     std::stack<std::uint16_t> _stack;
     std::array<std::uint8_t, Chip8::MEMORY_SIZE> _memory;    

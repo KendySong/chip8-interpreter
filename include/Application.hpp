@@ -50,6 +50,7 @@ public :
     int Run();
 
 private :
+
     //Attributes and properties
     static Application* _application;
     GLFWwindow* _window;

@@ -1,6 +1,12 @@
 #include "Application.hpp"
 
 Application* Application::_application = nullptr;
+
+void GetKeyboardInput(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+    CPU::GetInstance()->SetCurrentKeyInput(scancode, action);
+}
+
 Application::Application()
 {
     _fps = 0;
@@ -12,6 +18,7 @@ Application::Application()
     glfwWindowHint(GL_MAJOR_VERSION, 4);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwMakeContextCurrent(_window);
+    glfwSetKeyCallback(_window, GetKeyboardInput);
 
     //Load OpenGL and shaders
     gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
