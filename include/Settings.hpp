@@ -2,7 +2,8 @@
 
 /**
  * @brief Program settings,
- * can be used everywhere
+ * can be used everywhere.
+ * Values are defined in Settings.cpp
  */
 struct Settings
 {
@@ -32,4 +33,5 @@ namespace Chip8
     static const unsigned int CHARACTER_START_LOC = 0x50;   //Character loading starting emplacement
 
     static const unsigned int MAX_SPRITE_WIDTH = 8;
+    static const float TIMER_FREQUENCY = 60.0f;
 };

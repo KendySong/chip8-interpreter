@@ -25,14 +25,14 @@ Bnnn - JP V0, addr          => ok
 Cxkk - RND Vx, byte         => ok
 Dxyn - DRW Vx, Vy, nibble   => ok
 
-Ex9E - SKP Vx
-ExA1 - SKNP Vx
+Ex9E - SKP Vx               => ok
+ExA1 - SKNP Vx              => ok
 
-Fx07 - LD Vx, DT
+Fx07 - LD Vx, DT            => ok
 Fx0A - LD Vx, K
-Fx15 - LD DT, Vx
+Fx15 - LD DT, Vx            => ok
 Fx18 - LD ST, Vx
-Fx1E - ADD I, Vx
+Fx1E - ADD I, Vx            => ok
 Fx29 - LD F, Vx
 Fx33 - LD B, Vx
 Fx55 - LD [I], Vx
@@ -40,6 +40,7 @@ Fx65 - LD Vx, [I]
 
 //Debug
 //Instruction E=> convert ascii code to chip8 original key code
+//Add sound
 
 //Block minimze and movements
 ImGui::SetNextWindowPos(ImVec2(315, 586));

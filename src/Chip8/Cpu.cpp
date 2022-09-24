@@ -224,6 +224,57 @@ void CPU::Update()
             }
             break;
 
+        case 0xF000 :
+            switch (opCode & 0x00FF)
+            {
+            //LD Vx, DT
+            case 0x007 :
+                _register[opCode & 0x0F00 >> 8] = _delay;
+                break;
+            
+            //LD Vx, K
+            case 0x000A :
+
+                break;
+
+            //LD DT, Vx
+            case 0x0015 :
+                _delay = _register[opCode & 0x0F00 >> 8];
+                break;
+
+            //LD ST, Vx
+            case 0x0018 :
+                
+                break;
+
+            //ADD I, Vx
+            case 0x001E :
+                _index += _register[opCode & 0x0F00 >> 8];
+                break;
+
+            //LD F, Vx
+            case 0x0029 :
+                
+                break;
+
+            //LD B, Vx
+            case 0x0033 :
+                break;
+
+            //LD [I], Vx
+            case 0x055 :
+                break;
+
+            //LD Vx, [I]
+            case 0x0065 :
+                break;
+
+            default:
+                LogUnknownInstruction(opCode);
+                break;
+            }
+            break;
+
         default :           
             LogUnknownInstruction(opCode);
             break;
@@ -233,6 +284,12 @@ void CPU::Update()
     {
         _isRunning = false;
         ConsoleLog::GetInstance()->AddLog("[INFO] program execution finished\n");
+    }
+
+    //decrement increment timer values
+    if (_delayTimer.GetElapsedTime() > _timeAction && _delay > 0)
+    {
+        _delay--;
     }
 }
 
@@ -304,6 +361,7 @@ void CPU::Pause() noexcept
 void CPU::Reset() noexcept
 {
     srand(time(nullptr));
+    _timeAction = 1 / Chip8::TIMER_FREQUENCY;
 
     _isRunning = false;
     _currentKeyDown = 0;
@@ -347,7 +405,7 @@ void CPU::Reset() noexcept
     _keyMap[4] = 3;
     _keyMap[5] = 0xC;
 
-    _keyMap[16] = 4;    //'q' scancode is 16 and we convert to the value in the chip8 keyboard
+    _keyMap[16] = 4;    //scancode 'Q' key is 16 and we convert to the value in the chip8 keyboard
     _keyMap[17] = 5;
     _keyMap[18] = 6;
     _keyMap[19] = 0xD;

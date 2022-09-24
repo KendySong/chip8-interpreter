@@ -3,6 +3,8 @@
 #include <array>
 #include <stack>
 
+#include "Timer.hpp"
+
 #include "../Gui/ConsoleLog.hpp"
 
 #include "Settings.hpp"
@@ -111,16 +113,24 @@ public :
      */
     std::array<std::array<bool, Chip8::SCREEN_WIDTH>, Chip8::SCREEN_HEIGHT>& GetPixelRender() noexcept;
 
+    //Get set timer sound
+    //Add timer in application
+    //Decrement timer via application.cpp
+    
 private :
     static CPU* _cpu;
 
     bool _isRunning;
-    std::uint16_t _programCounter;
     std::uint16_t _index;
-
+    std::uint16_t _programCounter;
     std::uint16_t _x;                                                                       //First register index getting from instruction
-    std::uint16_t _y;                                                                       //Second register index getting from instruction
+    std::uint16_t _y;                                                                       //Second register index getting from instruction                                                                
     std::array<std::uint8_t, Chip8::REGISTER_SIZE> _register;
+
+    //Chip8 timer
+    float _timeAction;
+    Timer _delayTimer;
+    std::uint8_t _delay; 
 
     std::map<std::uint8_t, std::uint8_t> _keyMap;
     int _currentKeyDown;

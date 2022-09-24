@@ -66,7 +66,7 @@ int Application::Run()
 
         //Count fps
         _fps++;
-        if (_timer.GetElapsedTime() > 1)
+        if (_timer.GetElapsedTime() > 1000)
         {
             _menu.SetFPS(_fps);
             _fps = 0;
