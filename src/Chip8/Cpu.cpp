@@ -60,7 +60,7 @@ void CPU::Update()
 
         //SE Vx, byte
         case 0x3000 :
-            if (_register[opCode & 0x0F00 >> 8] == opCode & 0x00FF)
+            if (_register[(opCode & 0x0F00) >> 8] == opCode & 0x00FF)
             {
                 _programCounter += 2;
             }    
@@ -68,7 +68,7 @@ void CPU::Update()
 
         //SNE Vx, byte
         case 0x4000 :
-            if (_register[opCode & 0x0F00 >> 8] != opCode & 0x00FF)
+            if (_register[(opCode & 0x0F00) >> 8] != opCode & 0x00FF)
             {
                 _programCounter += 2;
             }  
@@ -76,7 +76,7 @@ void CPU::Update()
 
         //SE Vx, Vy
         case 0x5000 :
-            if (_register[opCode & 0x0F00 >> 8] == _register[opCode & 0x00F0 >> 4])
+            if (_register[(opCode & 0x0F00) >> 8] == _register[opCode & 0x00F0 >> 4])
             {
                 _programCounter += 2;
             } 
@@ -84,12 +84,12 @@ void CPU::Update()
 
         //Set register X to NN
         case 0x6000 :
-            _register[opCode & 0x0F00] = opCode & 0x00FF;
+            _register[(opCode & 0x0F00) >> 8] = opCode & 0x00FF;
             break;
 
         //Add NN to register X
         case 0x7000 :
-            _register[opCode & 0x0F00] += opCode & 0x00FF;
+            _register[(opCode & 0x0F00) >> 8] += opCode & 0x00FF;
             break;
 
         case 0x8000 :
@@ -97,70 +97,62 @@ void CPU::Update()
             {
             //LD Vx, Vy
             case 0x0000 :
-                _register[opCode & 0x0F00 >> 8] = _register[opCode & 0x00F0 >> 4];
+                _register[(opCode & 0x0F00) >> 8] = _register[(opCode & 0x00F0) >> 4];
                 break;
 
             //OR Vx, Vy
             case 0x0001 :
-                _x = opCode & 0x0F00 >> 8;
-                _register[_x] = _register[_x] | _register[opCode & 0x00F0 >> 4];
+                _x = (opCode & 0x0F00) >> 8;
+                _register[_x] = _register[_x] | _register[(opCode & 0x00F0) >> 4];
                 break;
 
             //AND Vx, Vy
             case 0x0002 :
-                _x = opCode & 0x0F00 >> 8;
-                _register[_x] = _register[_x] & _register[opCode & 0x00F0 >> 4];
+                _x = (opCode & 0x0F00) >> 8;
+                _register[_x] = _register[_x] & _register[(opCode & 0x00F0) >> 4];
                 break;
 
             //XOR Vx, Vy
             case 0x0003 :
-                _x = opCode & 0x0F00 >> 8;
-                _register[_x] = _register[_x] ^ _register[opCode & 0x00F0 >> 4];
+                _x = (opCode & 0x0F00) >> 8;
+                _register[_x] = _register[_x] ^ _register[(opCode & 0x00F0) >> 4];
                 break;
 
             //ADD Vx, Vy
             case 0x0004 :   
-                _x = opCode & 0x0F00 >> 8;
-                _y = opCode & 0x00F0 >> 4;
+                _x = (opCode & 0x0F00) >> 8;
+                _y = (opCode & 0x00F0) >> 4;
                 _register[_x] += _register[_y];
                 _register[Chip8::REGISTER_SIZE - 1] = _register[_x] + _register[_y] > 255 ? 1 : 0;
                 break;
 
             //SUB Vx, Vy
             case 0x0005 :
-                _x = opCode & 0x0F00 >> 8;
-                _y = opCode & 0x00F0 >> 4;
+                _x = (opCode & 0x0F00) >> 8;
+                _y = (opCode & 0x00F0) >> 4;
                 _register[Chip8::REGISTER_SIZE - 1] = _register[_x] > _register[_y] ? 1 : 0;
                 _register[_x] -=_register[_y];  
                 break;
 
             //SHR Vx {, Vy}
             case 0x0006 :
-                _x = opCode & 0x0F00 >> 8;
+                _x = (opCode & 0x0F00) >> 8;
                 _register[Chip8::REGISTER_SIZE - 1] = _register[_x] & 0x0001;
                 _register[_x] >>= 1;
-                
-                /* VIP COSMAC
-                _x = opCode & 0x0F00 >> 8;
-                _y = opCode & 0x00F0 >> 4;         
-                _register[Chip8::REGISTER_SIZE - 1] = _register[_x] & 0x0001;
-                _register[_x] = _register[_y];
-                _register[_x] >>= 1;
-                */
                 break;
 
             //SUBN Vx, Vy
             case 0x0007 :
-                _x = opCode & 0x0F00 >> 8;
-                _y = opCode & 0x00F0 >> 4;
+                _x = (opCode & 0x0F00) >> 8;
+                _y = (opCode & 0x00F0) >> 4;
                 _register[_x] = _register[_y] - _register[_x];
                 _register[Chip8::REGISTER_SIZE - 1] = _register[_y] > _register[_x] ? 1 : 0;
                 break;
 
             //SHL Vx {, Vy}
             case 0x000E :
-                _x = opCode & 0x0F00 >> 8;
-                _y = opCode & 0x00F0 >> 4;
+                _x = (opCode & 0x0F00) >> 8;
+                _y = (opCode & 0x00F0) >> 4;
                 _register[Chip8::REGISTER_SIZE - 1] = (_register[_x] >> 7) & 0x0001;
                 _register[_x] <<= 1;
                 break;
@@ -173,7 +165,7 @@ void CPU::Update()
         
         //SNE Vx, Vy
         case 0x9000 :
-            if (_register[opCode & 0x0F00 >> 8] != _register[opCode & 0x00F0 >> 4])
+            if (_register[(opCode & 0x0F00) >> 8] != _register[(opCode & 0x00F0) >> 4])
             {
                 _programCounter += 2;
             }        
@@ -191,7 +183,7 @@ void CPU::Update()
 
         //RND Vx, byte
         case 0xC000 :
-            _register[opCode & 0x0F00 >> 8] = (rand() % 256) & (opCode & 0x00FF);
+            _register[(opCode & 0x0F00) >> 8] = (rand() % 256) & (opCode & 0x00FF);
             break;
 
         //DRW Vx, Vy, nibble
@@ -204,7 +196,7 @@ void CPU::Update()
             {
             //SKP Vx
             case 0x000E:
-                if (_register[opCode & 0x0F00 >> 8] == _keyMap.at(_currentKeyDown) && (_actionKey == 1 || _actionKey == 2))
+                if (_register[(opCode & 0x0F00) >> 8] == _keyMap.at(_currentKeyDown) && (_actionKey == 1 || _actionKey == 2))
                 {
                     _programCounter += 2;
                 }            
@@ -212,7 +204,7 @@ void CPU::Update()
 
             //SKNP Vx
             case 0x0001:
-                if (_register[opCode & 0x0F00 >> 8] != _keyMap.at(_currentKeyDown))
+                if (_register[(opCode & 0x0F00) >> 8] != _keyMap.at(_currentKeyDown))
                 {
                     _programCounter += 2;
                 }
@@ -229,7 +221,7 @@ void CPU::Update()
             {
             //LD Vx, DT
             case 0x007 :
-                _register[opCode & 0x0F00 >> 8] = _delay;
+                _register[(opCode & 0x0F00) >> 8] = _delay;
                 break;
             
             //LD Vx, K
@@ -240,28 +232,28 @@ void CPU::Update()
                 }
                 else if (_keyMap.find(_currentKeyDown) != _keyMap.end())
                 {
-                    _register[opCode & 0x0F00 >> 8] = _keyMap.at(_currentKeyDown);
+                    _register[(opCode & 0x0F00) >> 8] = _keyMap.at(_currentKeyDown);
                 }
                 break;
 
             //LD DT, Vx
             case 0x0015 :
-                _delay = _register[opCode & 0x0F00 >> 8];
+                _delay = _register[(opCode & 0x0F00) >> 8];
                 break;
 
             //LD ST, Vx
             case 0x0018 :
-                _sound = _register[opCode & 0x0F00 >> 8];
+                _sound = _register[(opCode & 0x0F00) >> 8];
                 break;
 
             //ADD I, Vx
             case 0x001E :
-                _index += _register[opCode & 0x0F00 >> 8];
+                _index += _register[(opCode & 0x0F00) >> 8];
                 break;
 
             //LD F, Vx
             case 0x0029 :
-                _index = Chip8::CHARACTER_START_LOC + _register[opCode & 0x0F00 >> 8] * 5;
+                _index = Chip8::CHARACTER_START_LOC + _register[(opCode & 0x0F00) >> 8] * 5;
                 break;
 
             //LD B, Vx
@@ -373,7 +365,7 @@ void CPU::DrawSprite(std::uint16_t opCode)
 
 void CPU::StoreBCD(std::uint8_t opCode)
 {
-    std::uint8_t vx = _register[opCode & 0x0F00 >> 8];         
+    std::uint8_t vx = _register[(opCode & 0x0F00) >> 8];         
     _memory[_index + 2] = vx % 10;
     vx /= 10;
 

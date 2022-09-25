@@ -4,6 +4,8 @@
 #include <stack>
 #include <algorithm>
 
+#include <iostream>
+
 #include <glfw/glfw3.h>
 
 #include "Timer.hpp"
