@@ -71,15 +71,15 @@ void CPU::Update()
             if (_register[(opCode & 0x0F00) >> 8] != opCode & 0x00FF)
             {
                 _programCounter += 2;
-            }  
+            }
             break;
 
         //SE Vx, Vy
         case 0x5000 :
-            if (_register[(opCode & 0x0F00) >> 8] == _register[opCode & 0x00F0 >> 4])
+            if (_register[(opCode & 0x0F00) >> 8] == _register[(opCode & 0x00F0) >> 4])
             {
                 _programCounter += 2;
-            } 
+            }
             break; 
 
         //Set register X to NN
@@ -103,19 +103,19 @@ void CPU::Update()
             //OR Vx, Vy
             case 0x0001 :
                 _x = (opCode & 0x0F00) >> 8;
-                _register[_x] = _register[_x] | _register[(opCode & 0x00F0) >> 4];
+                _register[_x] |= _register[(opCode & 0x00F0) >> 4];
                 break;
 
             //AND Vx, Vy
             case 0x0002 :
                 _x = (opCode & 0x0F00) >> 8;
-                _register[_x] = _register[_x] & _register[(opCode & 0x00F0) >> 4];
+                _register[_x] &= _register[(opCode & 0x00F0) >> 4];
                 break;
 
             //XOR Vx, Vy
             case 0x0003 :
                 _x = (opCode & 0x0F00) >> 8;
-                _register[_x] = _register[_x] ^ _register[(opCode & 0x00F0) >> 4];
+                _register[_x] ^= _register[(opCode & 0x00F0) >> 4];
                 break;
 
             //ADD Vx, Vy

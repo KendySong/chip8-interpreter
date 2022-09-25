@@ -48,7 +48,7 @@ void Menu::ManageFileLoading()
     }
 
     //Manage chip8 code loading into program
-    if (_fileDialog.showFileDialog(_fileDialogName, imgui_addons::ImGuiFileBrowser::DialogMode::OPEN, ImVec2(700, 500), ".ch8"))
+    if (_fileDialog.showFileDialog(_fileDialogName, imgui_addons::ImGuiFileBrowser::DialogMode::OPEN, ImVec2(700, 500)))
     {
         _fileReader.open(_fileDialog.selected_path.c_str(), std::ios::binary | std::ios::ate);
         if (_fileReader.is_open())
