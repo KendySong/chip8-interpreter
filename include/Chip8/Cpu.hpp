@@ -45,6 +45,13 @@ public :
     void DrawSprite(std::uint16_t opCode);
 
     /**
+     * @brief Store BCD of VX into memory
+     * 
+     * @param opCode => instruction with parameters (Fx33 - LD B, Vx)
+     */
+    void StoreBCD(std::uint8_t opCode);
+
+    /**
      * @brief Set on the cpu
      * 
      */
@@ -74,8 +81,6 @@ public :
      * @param instruction to log into log window 
      */
     void LogUnknownInstruction(std::uint16_t opCode) noexcept;
-
-
 
     /**
      * @brief Get the pc that contain index of current 
@@ -113,7 +118,14 @@ public :
      */
     std::array<std::array<bool, Chip8::SCREEN_WIDTH>, Chip8::SCREEN_HEIGHT>& GetPixelRender() noexcept;
     
+    /**
+     * @brief Set the Key Input object
+     * 
+     * @param scanCode => keyboard key emplacement
+     * @param action => define if key is pressed, down or up
+     */
     void SetKeyInput(int scanCode, int action);
+
 private :
     static CPU* _cpu;
 
@@ -127,7 +139,8 @@ private :
     //Chip8 timer
     float _timeAction;
     Timer _delayTimer;
-    std::uint8_t _delay; 
+    std::uint8_t _delay;
+    std::uint8_t _sound;
 
     std::map<std::uint8_t, std::uint8_t> _keyMap;
     int _currentKeyDown;

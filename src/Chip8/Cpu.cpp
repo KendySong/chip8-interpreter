@@ -251,7 +251,7 @@ void CPU::Update()
 
             //LD ST, Vx
             case 0x0018 :
-                
+                _sound = _register[opCode & 0x0F00 >> 8];
                 break;
 
             //ADD I, Vx
@@ -266,23 +266,23 @@ void CPU::Update()
 
             //LD B, Vx
             case 0x0033 :       
-                std::uint8_t vx = _register[opCode & 0x0F00 >> 8];         
-                _memory[_index + 2] = vx % 10;
-                vx /= 10;
-
-                _memory[_index + 1] = vx % 10;
-                vx /= 10;
-
-                _memory[_index] = vx;
+                StoreBCD(opCode);
                 break;
 
             //LD [I], Vx
             case 0x055 :
-                
+                for (size_t i = 0; i <= opCode & 0x0F00; i++)
+                {
+                    _memory[_index + i] = _register[i];
+                }                   
                 break;
 
             //LD Vx, [I]
             case 0x0065 :
+                for (size_t i = 0; i <= opCode & 0x0F00; i++)
+                {
+                    _register[_index + i] = _register[i];
+                }    
                 break;
 
             default:
@@ -306,7 +306,14 @@ void CPU::Update()
     if (_delayTimer.GetElapsedTime() > _timeAction && _delay > 0)
     {
         _delay--;
+        _sound--;
     }
+
+    if (_sound > 0)
+    {
+        //Play bip sound
+    }
+    
 }
 
 void CPU::DrawSprite(std::uint16_t opCode)
@@ -362,6 +369,18 @@ void CPU::DrawSprite(std::uint16_t opCode)
             }  
         }  
     }
+}
+
+void CPU::StoreBCD(std::uint8_t opCode)
+{
+    std::uint8_t vx = _register[opCode & 0x0F00 >> 8];         
+    _memory[_index + 2] = vx % 10;
+    vx /= 10;
+
+    _memory[_index + 1] = vx % 10;
+    vx /= 10;
+
+    _memory[_index] = vx;
 }
 
 void CPU::Run() noexcept

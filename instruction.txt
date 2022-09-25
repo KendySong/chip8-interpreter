@@ -31,12 +31,12 @@ ExA1 - SKNP Vx              => ok
 Fx07 - LD Vx, DT            => ok
 Fx0A - LD Vx, K             => ok
 Fx15 - LD DT, Vx            => ok
-Fx18 - LD ST, Vx            
+Fx18 - LD ST, Vx            => ok
 Fx1E - ADD I, Vx            => ok
 Fx29 - LD F, Vx             => ok
 Fx33 - LD B, Vx             => ok
-Fx55 - LD [I], Vx
-Fx65 - LD Vx, [I]
+Fx55 - LD [I], Vx           => ok
+Fx65 - LD Vx, [I]           => ok
 
 //Debug
 //Instruction E=> convert ascii code to chip8 original key code
