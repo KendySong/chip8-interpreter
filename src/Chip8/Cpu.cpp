@@ -204,18 +204,18 @@ void CPU::Update()
             {
             //SKP Vx
             case 0x000E:
-                if (_register[opCode & 0x0F00 >> 8] == _keyMap[_currentKeyDown] && _actionKey == 1)
+                if (_register[opCode & 0x0F00 >> 8] == _keyMap.at(_currentKeyDown) && (_actionKey == 1 || _actionKey == 2))
                 {
                     _programCounter += 2;
-                }                           
+                }            
                 break;
 
             //SKNP Vx
             case 0x0001:
-                if (_register[opCode & 0x0F00 >> 8] != _keyMap[_currentKeyDown])
+                if (_register[opCode & 0x0F00 >> 8] != _keyMap.at(_currentKeyDown))
                 {
                     _programCounter += 2;
-                }  
+                }
                 break;
             
             default:
@@ -234,7 +234,14 @@ void CPU::Update()
             
             //LD Vx, K
             case 0x000A :
-
+                if (_actionKey == 0)
+                {
+                    _programCounter -= 2;
+                }
+                else if (_keyMap.find(_currentKeyDown) != _keyMap.end())
+                {
+                    _register[opCode & 0x0F00 >> 8] = _keyMap.at(_currentKeyDown);
+                }
                 break;
 
             //LD DT, Vx
@@ -254,15 +261,24 @@ void CPU::Update()
 
             //LD F, Vx
             case 0x0029 :
-                
+                _index = Chip8::CHARACTER_START_LOC + _register[opCode & 0x0F00 >> 8] * 5;
                 break;
 
             //LD B, Vx
-            case 0x0033 :
+            case 0x0033 :       
+                std::uint8_t vx = _register[opCode & 0x0F00 >> 8];         
+                _memory[_index + 2] = vx % 10;
+                vx /= 10;
+
+                _memory[_index + 1] = vx % 10;
+                vx /= 10;
+
+                _memory[_index] = vx;
                 break;
 
             //LD [I], Vx
             case 0x055 :
+                
                 break;
 
             //LD Vx, [I]
@@ -398,27 +414,27 @@ void CPU::Reset() noexcept
     {
         _memory[Chip8::CHARACTER_START_LOC + i] = characters[i];
     }
-
+  
     //Translate keyboard inputs
-    _keyMap[2] = 1;
-    _keyMap[3] = 2;
-    _keyMap[4] = 3;
-    _keyMap[5] = 0xC;
+    _keyMap[glfwGetKeyScancode(GLFW_KEY_1)] = 1;
+    _keyMap[glfwGetKeyScancode(GLFW_KEY_2)] = 2;
+    _keyMap[glfwGetKeyScancode(GLFW_KEY_3)] = 3;
+    _keyMap[glfwGetKeyScancode(GLFW_KEY_4)] = 0xC;
 
-    _keyMap[16] = 4;    //scancode 'Q' key is 16 and we convert to the value in the chip8 keyboard
-    _keyMap[17] = 5;
-    _keyMap[18] = 6;
-    _keyMap[19] = 0xD;
+    _keyMap[glfwGetKeyScancode(GLFW_KEY_Q)] = 4;
+    _keyMap[glfwGetKeyScancode(GLFW_KEY_W)] = 5;
+    _keyMap[glfwGetKeyScancode(GLFW_KEY_E)] = 6;
+    _keyMap[glfwGetKeyScancode(GLFW_KEY_R)] = 0xD;
 
-    _keyMap[30] = 7;
-    _keyMap[31] = 8;
-    _keyMap[32] = 9;
-    _keyMap[33] = 0xE;
+    _keyMap[glfwGetKeyScancode(GLFW_KEY_A)] = 7;
+    _keyMap[glfwGetKeyScancode(GLFW_KEY_S)] = 8;
+    _keyMap[glfwGetKeyScancode(GLFW_KEY_D)] = 9;
+    _keyMap[glfwGetKeyScancode(GLFW_KEY_F)] = 0xE;
 
-    _keyMap[44] = 0xA;
-    _keyMap[45] = 0;
-    _keyMap[46] = 0xB;
-    _keyMap[47] = 0xF;
+    _keyMap[glfwGetKeyScancode(GLFW_KEY_Z)] = 0xA;
+    _keyMap[glfwGetKeyScancode(GLFW_KEY_X)] = 0;
+    _keyMap[glfwGetKeyScancode(GLFW_KEY_C)] = 0xB;
+    _keyMap[glfwGetKeyScancode(GLFW_KEY_V)] = 0xF;
 }
 
 void CPU::ClearScreen() noexcept
@@ -434,12 +450,6 @@ void CPU::LogUnknownInstruction(std::uint16_t opCode) noexcept
     char errorMessage[42];
     snprintf(errorMessage, sizeof(errorMessage), "[ERROR] instruction 0x%X not recognize\n", opCode);
     ConsoleLog::GetInstance()->AddLog(errorMessage);
-}
-
-void CPU::SetCurrentKeyInput(int keyCode, int actionKey) noexcept
-{
-    _currentKeyDown = keyCode;
-    _actionKey = actionKey;
 }
 
 std::uint16_t CPU::GetProgramCounter() noexcept
@@ -465,4 +475,10 @@ std::array<std::uint8_t, Chip8::REGISTER_SIZE>& CPU::GetRegister() noexcept
 std::array<std::array<bool, Chip8::SCREEN_WIDTH>, Chip8::SCREEN_HEIGHT>& CPU::GetPixelRender() noexcept
 {
     return _pixelRender;
+}
+
+void CPU::SetKeyInput(int scanCode, int action)
+{
+    _currentKeyDown = scanCode;
+    _actionKey = action;
 }

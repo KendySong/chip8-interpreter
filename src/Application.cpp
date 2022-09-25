@@ -2,9 +2,9 @@
 
 Application* Application::_application = nullptr;
 
-void GetKeyboardInput(GLFWwindow* window, int key, int scancode, int action, int mods)
+void GetKeyInput(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-    CPU::GetInstance()->SetCurrentKeyInput(scancode, action);
+    CPU::GetInstance()->SetKeyInput(scancode, action);  
 }
 
 Application::Application()
@@ -17,8 +17,8 @@ Application::Application()
     glfwWindowHint(GL_MINOR_VERSION, 4);
     glfwWindowHint(GL_MAJOR_VERSION, 4);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwSetKeyCallback(_window, GetKeyInput);
     glfwMakeContextCurrent(_window);
-    glfwSetKeyCallback(_window, GetKeyboardInput);
 
     //Load OpenGL and shaders
     gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
@@ -74,7 +74,8 @@ int Application::Run()
         }
 
         CPU::GetInstance()->Update();
-        
+
+        //Render       
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
         glClear(GL_COLOR_BUFFER_BIT);
         ImGui_ImplOpenGL3_NewFrame();

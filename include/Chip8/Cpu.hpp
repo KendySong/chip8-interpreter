@@ -2,12 +2,17 @@
 #include <time.h>
 #include <array>
 #include <stack>
+#include <algorithm>
+
+#include <glfw/glfw3.h>
 
 #include "Timer.hpp"
 
 #include "../Gui/ConsoleLog.hpp"
 
 #include "Settings.hpp"
+
+
 
 #pragma once
 class CPU
@@ -70,12 +75,7 @@ public :
      */
     void LogUnknownInstruction(std::uint16_t opCode) noexcept;
 
-    /**
-     * @brief Set the current key down
-     * 
-     * @param keyCode => emplacement of the key in the keyboard
-     */
-    void SetCurrentKeyInput(int keyCode, int actionKey) noexcept;
+
 
     /**
      * @brief Get the pc that contain index of current 
@@ -112,11 +112,8 @@ public :
      * @return 2D bool array for display or not a pixel
      */
     std::array<std::array<bool, Chip8::SCREEN_WIDTH>, Chip8::SCREEN_HEIGHT>& GetPixelRender() noexcept;
-
-    //Get set timer sound
-    //Add timer in application
-    //Decrement timer via application.cpp
     
+    void SetKeyInput(int scanCode, int action);
 private :
     static CPU* _cpu;
 

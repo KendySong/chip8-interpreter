@@ -29,17 +29,18 @@ Ex9E - SKP Vx               => ok
 ExA1 - SKNP Vx              => ok
 
 Fx07 - LD Vx, DT            => ok
-Fx0A - LD Vx, K
+Fx0A - LD Vx, K             => ok
 Fx15 - LD DT, Vx            => ok
-Fx18 - LD ST, Vx
+Fx18 - LD ST, Vx            
 Fx1E - ADD I, Vx            => ok
-Fx29 - LD F, Vx
-Fx33 - LD B, Vx
+Fx29 - LD F, Vx             => ok
+Fx33 - LD B, Vx             => ok
 Fx55 - LD [I], Vx
 Fx65 - LD Vx, [I]
 
 //Debug
 //Instruction E=> convert ascii code to chip8 original key code
+//Convert pixel array into 1D
 //Add sound
 
 //Block minimze and movements
