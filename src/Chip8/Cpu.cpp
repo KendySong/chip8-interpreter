@@ -38,8 +38,8 @@ void CPU::Update()
             
             //RTS
             case 0x000E :      
-                _programCounter = _stack.top();
-                _stack.pop();
+                _sp--;
+                _programCounter = _stack[_sp];
                 break;
             
             default:
@@ -55,7 +55,8 @@ void CPU::Update()
 
         //CALL addr
         case 0x2000 :
-            _stack.push(_programCounter);
+            _stack[_sp] = _programCounter;
+            _sp++;
             _programCounter = opCode & 0x0FFF;
             break;
 
@@ -64,7 +65,7 @@ void CPU::Update()
             if (_register[(opCode & 0x0F00) >> 8] == opCode & 0x00FF)
             {
                 _programCounter += 2;
-            }    
+            }
             break;
 
         //SNE Vx, byte

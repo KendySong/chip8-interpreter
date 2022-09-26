@@ -4,8 +4,6 @@
 #include <stack>
 #include <algorithm>
 
-#include <iostream>
-
 #include <glfw/glfw3.h>
 
 #include "Timer.hpp"
@@ -148,7 +146,8 @@ private :
     int _currentKeyDown;
     int _actionKey;
 
-    std::stack<std::uint16_t> _stack;
+    std::uint8_t _sp;
+    std::array<std::uint16_t, Chip8::REGISTER_SIZE> _stack;
     std::array<std::uint8_t, Chip8::MEMORY_SIZE> _memory;    
 
     std::array<std::array<bool, Chip8::SCREEN_WIDTH>, Chip8::SCREEN_HEIGHT> _pixelRender;   //2D array (each case represent if a case is on/off)
