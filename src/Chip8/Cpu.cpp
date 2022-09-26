@@ -393,10 +393,12 @@ void CPU::Reset() noexcept
     _currentKeyDown = 0;
     _actionKey = 0;
     _index = 0;
+    _sp = 0;
     _programCounter = Chip8::PROGRAM_START_LOC;
 
     memset(&_register, 0, sizeof(_register));
     memset(&_memory, 0, sizeof(_memory));
+    memset(&_stack, 0, sizeof(_stack));
     ClearScreen();
     
     std::array<std::uint8_t, 80> characters
@@ -481,6 +483,17 @@ std::array<std::uint8_t, Chip8::REGISTER_SIZE>& CPU::GetRegister() noexcept
 {
     return _register;
 }
+
+std::uint8_t& CPU::GetSP() noexcept
+{
+    return _sp;
+}
+
+std::array<std::uint16_t, Chip8::REGISTER_SIZE>& CPU::GetStack() noexcept
+{
+    return _stack;
+}
+
 
 std::array<std::array<bool, Chip8::SCREEN_WIDTH>, Chip8::SCREEN_HEIGHT>& CPU::GetPixelRender() noexcept
 {

@@ -7,7 +7,7 @@ void CpuInfo::HandleInterface()
     ImGui::Text("I  : %x", CPU::GetInstance()->GetIndex());
     ImGui::Separator();
 
-    ImGui::Columns(2, "registers");
+    ImGui::Columns(2);
     for (int i = 0; i < CPU::GetInstance()->GetRegister().size(); i++)
     {
         ImGui::Text("V[%X] %X", i, CPU::GetInstance()->GetRegister()[i]);

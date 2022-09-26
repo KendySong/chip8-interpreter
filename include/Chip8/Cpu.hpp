@@ -111,6 +111,15 @@ public :
      */
     std::array<std::uint8_t, Chip8::MEMORY_SIZE>& GetMemory() noexcept;
 
+    std::uint8_t& GetSP() noexcept;
+
+    /**
+     * @brief Get the stack for display
+     * 
+     * @return Stack array
+     */
+    std::array<std::uint16_t, Chip8::REGISTER_SIZE>& GetStack() noexcept;
+
     /**
      * @brief Get the Pixel Render object
      * 

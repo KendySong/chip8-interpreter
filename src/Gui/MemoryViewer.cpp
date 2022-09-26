@@ -2,7 +2,9 @@
 
 void MemoryViewer::HandleInterface()
 {
-    ImGui::Begin("MemoryViewer");
-    ImGui::Text("Memory");
+    ImGui::Begin("Memory Viewer");
+
+    
+    
     ImGui::End();
 }
