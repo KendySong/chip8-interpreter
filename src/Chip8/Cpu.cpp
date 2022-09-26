@@ -37,8 +37,9 @@ void CPU::Update()
                 break;
             
             //RTS
-            case 0x000E : 
+            case 0x000E :      
                 _programCounter = _stack.top();
+                _stack.pop();
                 break;
             
             default:
@@ -102,28 +103,25 @@ void CPU::Update()
 
             //OR Vx, Vy
             case 0x0001 :
-                _x = (opCode & 0x0F00) >> 8;
-                _register[_x] |= _register[(opCode & 0x00F0) >> 4];
+                _register[(opCode & 0x0F00) >> 8] |= _register[(opCode & 0x00F0) >> 4];
                 break;
 
             //AND Vx, Vy
             case 0x0002 :
-                _x = (opCode & 0x0F00) >> 8;
-                _register[_x] &= _register[(opCode & 0x00F0) >> 4];
+                _register[(opCode & 0x0F00) >> 8] &= _register[(opCode & 0x00F0) >> 4];
                 break;
 
             //XOR Vx, Vy
             case 0x0003 :
-                _x = (opCode & 0x0F00) >> 8;
-                _register[_x] ^= _register[(opCode & 0x00F0) >> 4];
+                _register[(opCode & 0x0F00) >> 8] ^= _register[(opCode & 0x00F0) >> 4];
                 break;
 
             //ADD Vx, Vy
             case 0x0004 :   
                 _x = (opCode & 0x0F00) >> 8;
-                _y = (opCode & 0x00F0) >> 4;
-                _register[_x] += _register[_y];
+                _y = (opCode & 0x00F0) >> 4;          
                 _register[Chip8::REGISTER_SIZE - 1] = _register[_x] + _register[_y] > 255 ? 1 : 0;
+                _register[_x] = (_register[_x] + _register[_y]) & 0x00FF;
                 break;
 
             //SUB Vx, Vy
@@ -144,16 +142,16 @@ void CPU::Update()
             //SUBN Vx, Vy
             case 0x0007 :
                 _x = (opCode & 0x0F00) >> 8;
-                _y = (opCode & 0x00F0) >> 4;
-                _register[_x] = _register[_y] - _register[_x];
+                _y = (opCode & 0x00F0) >> 4;      
                 _register[Chip8::REGISTER_SIZE - 1] = _register[_y] > _register[_x] ? 1 : 0;
+                _register[_x] = _register[_y] - _register[_x];
                 break;
 
             //SHL Vx {, Vy}
             case 0x000E :
                 _x = (opCode & 0x0F00) >> 8;
                 _y = (opCode & 0x00F0) >> 4;
-                _register[Chip8::REGISTER_SIZE - 1] = (_register[_x] >> 7) & 0x0001;
+                _register[Chip8::REGISTER_SIZE - 1] = (_register[_x] >> 7) & 0x0001;          
                 _register[_x] <<= 1;
                 break;
             
