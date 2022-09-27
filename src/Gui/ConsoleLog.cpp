@@ -12,17 +12,19 @@ ConsoleLog* ConsoleLog::GetInstance()
 
 void ConsoleLog::HandleInterface()
 {
-    ImGui::Begin("Console");
-
-    if (ImGui::Button("Clear"))
+    if (ImGui::Begin("Console"))
     {
-        _addressBuffer.clear();
-    }
+        if (ImGui::Button("Clear"))
+        {
+            _addressBuffer.clear();
+        }
 
-    ImGui::Separator();
-    ImGui::BeginChild("console log");
-    ImGui::TextUnformatted(_addressBuffer.begin());
-    ImGui::EndChild();
+        ImGui::Separator();
+        ImGui::BeginChild("console log");
+        ImGui::TextUnformatted(_addressBuffer.begin());
+        ImGui::EndChild();
+    }
+  
     ImGui::End();
 }
 

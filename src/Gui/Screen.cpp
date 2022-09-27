@@ -22,34 +22,37 @@ void Screen::Init(unsigned int shaderID)
 
 void Screen::HandleInterface()
 {
-    glBindFramebuffer(GL_FRAMEBUFFER, _fbRender);
-    glClear(GL_COLOR_BUFFER_BIT);
-
-    for (float x = 0; x < Chip8::SCREEN_WIDTH; x++)
+    if (ImGui::Begin("Chip8 Screen"))
     {
-        for (float y = 0; y < Chip8::SCREEN_HEIGHT; y++)
+        glBindFramebuffer(GL_FRAMEBUFFER, _fbRender);
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        for (float x = 0; x < Chip8::SCREEN_WIDTH; x++)
         {
-            if (CPU::GetInstance()->GetPixelRender()[y][x])
+            for (float y = 0; y < Chip8::SCREEN_HEIGHT; y++)
             {
-                glm::vec2 currentPosition(-1.0f + x  * _pixelSize.x, 1 - y * _pixelSize.y);
-                glUniform2fv(_positionUniform, 1, &currentPosition[0]);
-                glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-            }       
+                if (CPU::GetInstance()->GetPixelRender()[y][x])
+                {
+                    glm::vec2 currentPosition(-1.0f + x  * _pixelSize.x, 1 - y * _pixelSize.y);
+                    glUniform2fv(_positionUniform, 1, &currentPosition[0]);
+                    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+                }       
+            }
         }
+
+        
+        ImGui::GetWindowDrawList()->AddImage
+        (
+            (void*)_textureRender, 
+            ImGui::GetCursorScreenPos(), 
+            ImVec2(ImGui::GetCursorScreenPos().x + _reducedRatio.x, ImGui::GetCursorScreenPos().y + _reducedRatio.y), 
+            ImVec2(0, 1),
+            ImVec2(1, 0)
+        );
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
     }
-
-    ImGui::Begin("Chip8 Screen");
-    ImGui::GetWindowDrawList()->AddImage
-    (
-        (void*)_textureRender, 
-        ImGui::GetCursorScreenPos(), 
-        ImVec2(ImGui::GetCursorScreenPos().x + _reducedRatio.x, ImGui::GetCursorScreenPos().y + _reducedRatio.y), 
-        ImVec2(0, 1),
-        ImVec2(1, 0)
-    );
-    ImGui::End();
-
-    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    
+    ImGui::End(); 
 }
 
 void Screen::InitializeScreen()
