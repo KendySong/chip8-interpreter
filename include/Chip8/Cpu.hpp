@@ -12,8 +12,6 @@
 
 #include "Settings.hpp"
 
-
-
 #pragma once
 class CPU
 {

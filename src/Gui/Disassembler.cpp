@@ -29,6 +29,11 @@ void Disassembler::HandleInterface()
         ImGui::BeginChild("child");
         ImGui::Columns(2);
 
+        ImGui::TextUnformatted("Address");
+        ImGui::NextColumn();
+        ImGui::TextUnformatted("Value");
+        ImGui::NextColumn();
+
         //https://github.com/ocornut/imgui/issues/124
         int displayStart = 0;
         int displayEnd = Chip8::MEMORY_SIZE;
