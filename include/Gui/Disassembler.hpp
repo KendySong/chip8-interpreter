@@ -2,7 +2,7 @@
 
 #include "../Chip8/CPU.hpp"
 
-#include "Gui.hpp"
+#include "MemoryViewer.hpp"
 
 #pragma once
 

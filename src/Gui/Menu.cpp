@@ -58,9 +58,11 @@ void Menu::ManageFileLoading()
             _fileReader.seekg(0, std::ios::beg);
             _fileReader.read(buffer, size);
 
+            MemoryViewer::GetInstance()->GetMemoryRom().reserve(size);
             for (size_t i = 0; i < size; i++)
             {
                 CPU::GetInstance()->GetMemory()[Chip8::PROGRAM_START_LOC + i] = buffer[i];
+                MemoryViewer::GetInstance()->GetMemoryRom().push_back(buffer[i]);
             }
                        
             delete[] buffer;

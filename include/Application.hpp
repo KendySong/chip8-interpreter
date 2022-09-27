@@ -36,7 +36,7 @@ private :
 
 public :
     /**
-     * @brief Get the Instance the application
+     * @brief Get the instance the application
      * 
      * @return pointer to app instance
      */
@@ -63,7 +63,6 @@ private :
     CpuInfo _cpuInfo;
     Disassembler _disassembler;
     KeyboardHandler _keyboardHandler;
-    MemoryViewer _memoryViewer;
     Menu _menu;
     Screen _screen;
     StackViewer _stackViewer;

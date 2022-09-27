@@ -37,14 +37,15 @@ Application::Application()
     _screen.Init(_shader.GetProgram());
     _screen.InitializeScreen();
 
-    _guiComponents.reserve(7);
-    _guiComponents.push_back(&_cpuInfo);
-    _guiComponents.push_back(&_disassembler);
-    _guiComponents.push_back(&_keyboardHandler);
-    _guiComponents.push_back(&_memoryViewer);
-    _guiComponents.push_back(&_menu);
-    _guiComponents.push_back(&_screen); 
-    _guiComponents.push_back(&_stackViewer);
+    _guiComponents.reserve(8);
+    _guiComponents.emplace_back(&_cpuInfo);
+    _guiComponents.emplace_back(&_disassembler);
+    _guiComponents.emplace_back(&_keyboardHandler);
+    _guiComponents.emplace_back(MemoryViewer::GetInstance());
+    _guiComponents.emplace_back(&_menu);
+    _guiComponents.emplace_back(&_screen); 
+    _guiComponents.emplace_back(ConsoleLog::GetInstance());
+    _guiComponents.emplace_back(&_stackViewer);
 }
 
 Application* Application::GetInstance() noexcept
@@ -82,7 +83,6 @@ int Application::Run()
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        ConsoleLog::GetInstance()->HandleInterface();
         for (size_t i = 0; i < _guiComponents.size(); i++)
         {
             _guiComponents[i]->HandleInterface();

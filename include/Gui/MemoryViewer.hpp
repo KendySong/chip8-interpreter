@@ -1,4 +1,11 @@
+#include <vector>
+#include <stdio.h>
+#include <cstdint>
+#include <string>
+
 #include "Gui.hpp"
+
+#include "Settings.hpp"
 
 #pragma once
 
@@ -21,5 +28,21 @@ public :
      */
     void HandleInterface();
 
+    /**
+     * @brief Get the instance the application
+     * 
+     * @return pointer to memory viewer instance
+     */
+    static MemoryViewer* GetInstance();
+
+    /**
+     * @brief Store the rom bytes for display
+     * 
+     * @return vector that store rom bytes
+     */
+    std::vector<std::uint8_t>& GetMemoryRom() noexcept;
+
 private :
+    static MemoryViewer* _memoryViewer;
+    std::vector<std::uint8_t> _memoryRom;
 };

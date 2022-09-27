@@ -24,7 +24,7 @@ void CPU::Update()
         opCode <<= 8;
         opCode |= _memory[_programCounter + 1];
         _programCounter += 2;
-    
+
         //Decode the instruction and execute him
         switch (opCode & 0xF000)
         {

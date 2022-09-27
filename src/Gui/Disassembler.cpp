@@ -22,6 +22,7 @@ void Disassembler::HandleInterface()
         if (ImGui::Button("Reset"))
         {
             CPU::GetInstance()->Reset();
+            MemoryViewer::GetInstance()->GetMemoryRom().clear();
         }
         ImGui::Separator();
 
