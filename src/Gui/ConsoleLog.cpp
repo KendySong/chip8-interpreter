@@ -20,8 +20,8 @@ void ConsoleLog::HandleInterface()
         }
 
         ImGui::Separator();
-        ImGui::BeginChild("console log");
-        ImGui::TextUnformatted(_addressBuffer.begin());
+        ImGui::BeginChild("console log");   
+        ImGui::TextUnformatted(_addressBuffer.begin());    
         ImGui::EndChild();
     }
   
