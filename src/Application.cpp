@@ -67,15 +67,19 @@ int Application::Run()
 
         //Count fps
         _fps++;
-        if (_timer.GetElapsedTime() > 1000)
+        if (_timerFps.GetElapsedTime() > 1000)
         {
             _menu.SetFPS(_fps);
             _fps = 0;
-            _timer.Restart();
+            _timerFps.Restart();
         }
 
-        CPU::GetInstance()->Update();
-
+        if (_cpuLimit.GetElapsedTime() > 1000)
+        {
+            CPU::GetInstance()->Update();
+            _cpuLimit.Restart();
+        }
+        
         //Render       
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
         glClear(GL_COLOR_BUFFER_BIT);

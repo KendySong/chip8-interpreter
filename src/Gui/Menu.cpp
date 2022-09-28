@@ -27,11 +27,6 @@ void Menu::HandleInterface()
         ImGui::EndMenu();
     }
 
-    if (ImGui::BeginMenu("Settings"))
-    {
-        ImGui::EndMenu();
-    }
-
     ImGui::Text(_barSpace.c_str());
     ImGui::Text("FPS : %i", _fps);
 

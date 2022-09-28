@@ -56,7 +56,8 @@ private :
     GLFWwindow* _window;
 
     unsigned int _fps;
-    Timer _timer;
+    Timer _timerFps;
+    Timer _cpuLimit;
 
     //Instance gui components
     std::vector<Gui*> _guiComponents;
