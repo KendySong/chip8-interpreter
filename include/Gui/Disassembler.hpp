@@ -17,11 +17,14 @@ public :
      * @brief Construct a new Instruction Debug object
      * 
      */
-    Disassembler() = default;
+    Disassembler();
 
     /**
      * @brief Render instructions of the chip8 code 
      * and their addresses 
      */
     void HandleInterface();
+
+private :
+    bool _renderAtPC;
 };
