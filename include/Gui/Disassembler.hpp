@@ -26,5 +26,7 @@ public :
     void HandleInterface();
 
 private :
+    void DisassembleInstruction(std::uint16_t opCode);
+
     bool _renderAtPC;
 };

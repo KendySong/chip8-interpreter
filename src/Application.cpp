@@ -75,6 +75,7 @@ int Application::Run()
             _timerFps.Restart();
         }
 
+        //Execute chip8 instructions
         if (_cpuLimit.GetElapsedTime() > Settings::cpuSpeed)
         {
             CPU::GetInstance()->Update();
@@ -95,7 +96,6 @@ int Application::Run()
 
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
         glfwSwapBuffers(_window);
     }
     
