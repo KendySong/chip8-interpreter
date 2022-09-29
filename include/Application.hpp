@@ -12,6 +12,7 @@
 #include "Gui/KeyboardHandler.hpp"
 #include "Gui/MemoryViewer.hpp"
 #include "Gui/Menu.hpp"
+#include "Gui/MenuSettings.hpp"
 #include "Gui/Screen.hpp"
 #include "Gui/StackViewer.hpp"
 
@@ -65,6 +66,7 @@ private :
     Disassembler _disassembler;
     KeyboardHandler _keyboardHandler;
     Menu _menu;
+    MenuSettings _menuSettings;
     Screen _screen;
     StackViewer _stackViewer;
 };

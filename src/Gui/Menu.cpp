@@ -6,11 +6,6 @@ Menu::Menu()
     _isOpen = false;
     _fileDialogName = "Load source code";
 
-    for (size_t i = 0; i < Settings::fpsTextSpace; i++)
-    {
-        _barSpace += ' ';
-    }
-
     CPU::GetInstance();
 }
 
@@ -26,8 +21,8 @@ void Menu::HandleInterface()
 
         ImGui::EndMenu();
     }
-
-    ImGui::Text(_barSpace.c_str());
+    
+    ImGui::SetCursorPosX(ImGui::GetWindowWidth() - 75);
     ImGui::Text("FPS : %i", _fps);
 
     ImGui::EndMainMenuBar();

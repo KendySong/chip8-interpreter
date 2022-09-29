@@ -12,9 +12,7 @@ public :
     static unsigned int windowWidth;
     static unsigned int windowHeight;
     static const char* title;
-
-    //interface
-    static unsigned int fpsTextSpace;
+    static float cpuSpeed;
 };
 
 /**

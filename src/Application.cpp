@@ -43,6 +43,7 @@ Application::Application()
     _guiComponents.emplace_back(&_keyboardHandler);
     _guiComponents.emplace_back(MemoryViewer::GetInstance());
     _guiComponents.emplace_back(&_menu);
+    _guiComponents.emplace_back(&_menuSettings);
     _guiComponents.emplace_back(&_screen); 
     _guiComponents.emplace_back(ConsoleLog::GetInstance());
     _guiComponents.emplace_back(&_stackViewer);
@@ -74,7 +75,7 @@ int Application::Run()
             _timerFps.Restart();
         }
 
-        if (_cpuLimit.GetElapsedTime() > 1000)
+        if (_cpuLimit.GetElapsedTime() > Settings::cpuSpeed)
         {
             CPU::GetInstance()->Update();
             _cpuLimit.Restart();

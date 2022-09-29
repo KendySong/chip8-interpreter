@@ -43,7 +43,6 @@ public :
 
 private :
     int _fps;
-    std::string _barSpace;
 
     bool _isOpen;
     const char* _fileDialogName;
