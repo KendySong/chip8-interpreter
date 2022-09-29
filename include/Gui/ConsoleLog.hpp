@@ -1,3 +1,4 @@
+#include <fstream>
 #include <sstream>
 
 #include <FileBrowser/ImGuiFileBrowser.h>
@@ -40,6 +41,12 @@ public :
      * @param log to add
      */
     void AddLog(const char* log);
+
+    /**
+     * @brief Save the current logs into txt file
+     * 
+     */
+    void SaveToFile();
 
 private :
     static ConsoleLog* _consoleLog;

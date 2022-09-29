@@ -464,14 +464,15 @@ void CPU::LogUnknownInstruction(std::uint16_t opCode) noexcept
     ConsoleLog::GetInstance()->AddLog(errorMessage);
 }
 
+void CPU::SetKeyInput(int scanCode, int action)
+{
+    _currentKeyDown = scanCode;
+    _actionKey = action;
+}
+
 bool CPU::GetIsRunning() noexcept
 {
     return _isRunning;
-}
-
-std::uint16_t CPU::GetProgramCounter() noexcept
-{
-    return _programCounter;
 }
 
 std::uint16_t CPU::GetIndex() noexcept
@@ -479,14 +480,10 @@ std::uint16_t CPU::GetIndex() noexcept
     return _index;
 }
 
-std::array<std::uint8_t, Chip8::MEMORY_SIZE>& CPU::GetMemory() noexcept
-{
-    return _memory;
-}
 
-std::array<std::uint8_t, Chip8::REGISTER_SIZE>& CPU::GetRegister() noexcept
+std::uint16_t CPU::GetProgramCounter() noexcept
 {
-    return _register;
+    return _programCounter;
 }
 
 std::uint8_t& CPU::GetSP() noexcept
@@ -494,19 +491,22 @@ std::uint8_t& CPU::GetSP() noexcept
     return _sp;
 }
 
+std::array<std::uint8_t, Chip8::REGISTER_SIZE>& CPU::GetRegister() noexcept
+{
+    return _register;
+}
+
 std::array<std::uint16_t, Chip8::REGISTER_SIZE>& CPU::GetStack() noexcept
 {
     return _stack;
 }
 
+std::array<std::uint8_t, Chip8::MEMORY_SIZE>& CPU::GetMemory() noexcept
+{
+    return _memory;
+}
 
 std::array<std::array<bool, Chip8::SCREEN_WIDTH>, Chip8::SCREEN_HEIGHT>& CPU::GetPixelRender() noexcept
 {
     return _pixelRender;
-}
-
-void CPU::SetKeyInput(int scanCode, int action)
-{
-    _currentKeyDown = scanCode;
-    _actionKey = action;
 }

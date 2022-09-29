@@ -80,20 +80,20 @@ public :
      */
     void LogUnknownInstruction(std::uint16_t opCode) noexcept;
 
+     /**
+     * @brief Set the Key Input object
+     * 
+     * @param scanCode => keyboard key emplacement
+     * @param action => define if key is pressed, down or up
+     */
+    void SetKeyInput(int scanCode, int action);
+
     /**
      * @brief Get the cpu state
      * 
      * @return bool that represent cpu state
      */
     bool GetIsRunning() noexcept;
-
-    /**
-     * @brief Get the pc that contain index of current 
-     * executing instruction
-     * 
-     * @return pc that point into memory
-     */
-    std::uint16_t GetProgramCounter() noexcept;
 
     /**
      * @brief Get the index reguister
@@ -103,25 +103,26 @@ public :
     std::uint16_t GetIndex() noexcept;
 
     /**
-     * @brief Allow gui display cpu register values
+     * @brief Get the pc that contain index of current 
+     * executing instruction
      * 
-     * @return std::array<std::uint8_t, Chip8::REGISTER_SIZE>& 
+     * @return pc that point into memory
      */
-    std::array<std::uint8_t, Chip8::REGISTER_SIZE>& GetRegister() noexcept;
-
-    /**
-     * @brief Allow menu.cpp load chip8 program into memory
-     * 
-     * @return Memory array
-     */
-    std::array<std::uint8_t, Chip8::MEMORY_SIZE>& GetMemory() noexcept;
-
+    std::uint16_t GetProgramCounter() noexcept;
+    
     /**
      * @brief Getter of stack pointer
      * 
      * @return stack pointer reference
      */
     std::uint8_t& GetSP() noexcept;
+
+    /**
+     * @brief Allow gui display cpu register values
+     * 
+     * @return std::array<std::uint8_t, Chip8::REGISTER_SIZE>& 
+     */
+    std::array<std::uint8_t, Chip8::REGISTER_SIZE>& GetRegister() noexcept;
 
     /**
      * @brief Get the stack for display
@@ -131,19 +132,20 @@ public :
     std::array<std::uint16_t, Chip8::REGISTER_SIZE>& GetStack() noexcept;
 
     /**
+     * @brief Allow menu.cpp load chip8 program into memory
+     * 
+     * @return Memory array
+     */
+    std::array<std::uint8_t, Chip8::MEMORY_SIZE>& GetMemory() noexcept;
+
+    /**
      * @brief Get the Pixel Render object
      * 
      * @return 2D bool array for display or not a pixel
      */
     std::array<std::array<bool, Chip8::SCREEN_WIDTH>, Chip8::SCREEN_HEIGHT>& GetPixelRender() noexcept;
     
-    /**
-     * @brief Set the Key Input object
-     * 
-     * @param scanCode => keyboard key emplacement
-     * @param action => define if key is pressed, down or up
-     */
-    void SetKeyInput(int scanCode, int action);
+   
 
 private :
     static CPU* _cpu;
@@ -168,6 +170,5 @@ private :
     std::uint8_t _sp;
     std::array<std::uint16_t, Chip8::REGISTER_SIZE> _stack;
     std::array<std::uint8_t, Chip8::MEMORY_SIZE> _memory;    
-
     std::array<std::array<bool, Chip8::SCREEN_WIDTH>, Chip8::SCREEN_HEIGHT> _pixelRender;   //2D array (each case represent if a case is on/off)
 };

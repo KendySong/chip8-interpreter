@@ -19,6 +19,12 @@ void ConsoleLog::HandleInterface()
             _addressBuffer.clear();
         }
 
+        ImGui::SameLine();
+        if (ImGui::Button("Save to file"))
+        {
+            SaveToFile();
+        }
+        
         ImGui::Separator();
         ImGui::BeginChild("console log");   
         ImGui::TextUnformatted(_addressBuffer.begin());    
@@ -31,4 +37,11 @@ void ConsoleLog::HandleInterface()
 void ConsoleLog::AddLog(const char* log)
 {
     _addressBuffer.append(log);
+}
+
+void ConsoleLog::SaveToFile()
+{
+    std::ofstream writer("log.txt", std::ios::app);
+    writer << _addressBuffer.begin();
+    writer.close();
 }

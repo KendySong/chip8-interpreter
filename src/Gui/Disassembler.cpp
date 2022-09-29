@@ -43,6 +43,7 @@ void Disassembler::HandleInterface()
 
             if (i % 2 == 0)
             {
+                ImGui::SetCursorPosY(ImGui::GetCursorPosY());
                 DisassembleInstruction((memory[i] << 8) | memory[i + 1]);
             }
             else
