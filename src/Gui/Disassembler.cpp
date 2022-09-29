@@ -9,27 +9,6 @@ void Disassembler::HandleInterface()
 {
     if (ImGui::Begin("Disassembler"))
     {
-        if (ImGui::Button("Start"))
-        {
-            CPU::GetInstance()->Run();
-        }
-
-        ImGui::SameLine();
-        ImGui::Button("Step by step");
-        
-        ImGui::SameLine();
-        if (ImGui::Button("Stop"))
-        {
-            CPU::GetInstance()->Pause();
-        }
-
-        ImGui::SameLine();
-        if (ImGui::Button("Reset"))
-        {
-            CPU::GetInstance()->Reset();
-            MemoryViewer::GetInstance()->GetMemoryRom().clear();
-        }
-        ImGui::SameLine();
         ImGui::Checkbox("Scroll to PC", &_renderAtPC);     
         ImGui::Separator();
 

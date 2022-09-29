@@ -81,6 +81,13 @@ public :
     void LogUnknownInstruction(std::uint16_t opCode) noexcept;
 
     /**
+     * @brief Get the cpu state
+     * 
+     * @return bool that represent cpu state
+     */
+    bool GetIsRunning() noexcept;
+
+    /**
      * @brief Get the pc that contain index of current 
      * executing instruction
      * 
@@ -109,6 +116,11 @@ public :
      */
     std::array<std::uint8_t, Chip8::MEMORY_SIZE>& GetMemory() noexcept;
 
+    /**
+     * @brief Getter of stack pointer
+     * 
+     * @return stack pointer reference
+     */
     std::uint8_t& GetSP() noexcept;
 
     /**

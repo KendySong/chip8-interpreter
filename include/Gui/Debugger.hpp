@@ -1,3 +1,5 @@
+#include "../Chip8/Cpu.hpp"
+
 #include "Gui.hpp"
 
 #include "Settings.hpp"
@@ -7,14 +9,14 @@
  * @brief Display and modify settings
  * 
  */
-class MenuSettings : public Gui
+class Debugger : public Gui
 {
 public :
     /**
      * @brief Constructor
      * 
      */
-    MenuSettings() = default;
+    Debugger() = default;
 
     /**
      * @brief Display and construct the interface

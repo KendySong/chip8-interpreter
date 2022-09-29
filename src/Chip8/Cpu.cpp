@@ -16,8 +16,8 @@ CPU* CPU::GetInstance()
 }
 
 void CPU::Update()
-{   
-    if (_isRunning && _programCounter < Chip8::MEMORY_SIZE)
+{
+    if (_programCounter < Chip8::MEMORY_SIZE)
     {
         //Assemble 2 byte for getting raw op code
         std::uint16_t opCode =  _memory[_programCounter];
@@ -287,7 +287,7 @@ void CPU::Update()
             break;
         }
     }
-    else if (_isRunning && _programCounter >= Chip8::MEMORY_SIZE)
+    else if (_programCounter >= Chip8::MEMORY_SIZE)
     {
         _isRunning = false;
         ConsoleLog::GetInstance()->AddLog("[INFO] program execution finished\n");
@@ -462,6 +462,11 @@ void CPU::LogUnknownInstruction(std::uint16_t opCode) noexcept
     char errorMessage[42];
     snprintf(errorMessage, sizeof(errorMessage), "[ERROR] instruction 0x%X not recognize\n", opCode);
     ConsoleLog::GetInstance()->AddLog(errorMessage);
+}
+
+bool CPU::GetIsRunning() noexcept
+{
+    return _isRunning;
 }
 
 std::uint16_t CPU::GetProgramCounter() noexcept
