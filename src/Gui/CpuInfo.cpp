@@ -4,8 +4,8 @@ void CpuInfo::HandleInterface()
 {
     if (ImGui::Begin("CPU"))
     {
-        ImGui::Text("PC : %x", CPU::GetInstance()->GetProgramCounter());
-        ImGui::Text("I  : %x", CPU::GetInstance()->GetIndex());
+        ImGui::Text("PC : %X", CPU::GetInstance()->GetProgramCounter());
+        ImGui::Text("I  : %X", CPU::GetInstance()->GetIndex());
         ImGui::Separator();
 
         ImGui::Columns(2);

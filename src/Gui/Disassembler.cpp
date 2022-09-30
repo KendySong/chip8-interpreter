@@ -41,16 +41,7 @@ void Disassembler::HandleInterface()
             ImGui::Text("0x%X", memory[i]);
             ImGui::NextColumn();
 
-            if (i % 2 == 0)
-            {
-                ImGui::SetCursorPosY(ImGui::GetCursorPosY());
-                DisassembleInstruction((memory[i] << 8) | memory[i + 1]);
-            }
-            else
-            {
-                ImGui::TextUnformatted("");
-            }
-
+            DisassembleInstruction((memory[i] << 8) | memory[i + 1]);
             ImGui::NextColumn();
         }
 

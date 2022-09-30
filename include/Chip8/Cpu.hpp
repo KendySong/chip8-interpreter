@@ -144,8 +144,6 @@ public :
      * @return 2D bool array for display or not a pixel
      */
     std::array<std::array<bool, Chip8::SCREEN_WIDTH>, Chip8::SCREEN_HEIGHT>& GetPixelRender() noexcept;
-    
-   
 
 private :
     static CPU* _cpu;

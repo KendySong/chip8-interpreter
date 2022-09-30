@@ -50,19 +50,19 @@ void CPU::Update()
 
         //JMP addr
         case 0x1000 :
-            _programCounter = opCode & 0x0FFF;
+            _programCounter = (opCode & 0x0FFF);
             break;
 
         //CALL addr
         case 0x2000 :
             _stack[_sp] = _programCounter;
             _sp++;
-            _programCounter = opCode & 0x0FFF;
+            _programCounter = (opCode & 0x0FFF);
             break;
 
         //SE Vx, byte
         case 0x3000 :
-            if (_register[(opCode & 0x0F00) >> 8] == opCode & 0x00FF)
+            if (_register[(opCode & 0x0F00) >> 8] == (opCode & 0x00FF))
             {
                 _programCounter += 2;
             }
@@ -70,7 +70,7 @@ void CPU::Update()
 
         //SNE Vx, byte
         case 0x4000 :
-            if (_register[(opCode & 0x0F00) >> 8] != opCode & 0x00FF)
+            if (_register[(opCode & 0x0F00) >> 8] != (opCode & 0x00FF))
             {
                 _programCounter += 2;
             }
@@ -86,12 +86,12 @@ void CPU::Update()
 
         //Set register X to NN
         case 0x6000 :
-            _register[(opCode & 0x0F00) >> 8] = opCode & 0x00FF;
+            _register[(opCode & 0x0F00) >> 8] = (opCode & 0x00FF);
             break;
 
         //Add NN to register X
         case 0x7000 :
-            _register[(opCode & 0x0F00) >> 8] += opCode & 0x00FF;
+            _register[(opCode & 0x0F00) >> 8] += (opCode & 0x00FF);
             break;
 
         case 0x8000 :
@@ -172,7 +172,7 @@ void CPU::Update()
 
         //Set I to NNN
         case 0xA000 :
-            _index = opCode & 0x0FFF;
+            _index = (opCode & 0x0FFF);
             break;
             
         //JP V0, addr
@@ -262,7 +262,7 @@ void CPU::Update()
 
             //LD [I], Vx
             case 0x055 :
-                for (size_t i = 0; i <= opCode & 0x0F00; i++)
+                for (size_t i = 0; i <= (opCode & 0x0F00); i++)
                 {
                     _memory[_index + i] = _register[i];
                 }                   
@@ -270,7 +270,7 @@ void CPU::Update()
 
             //LD Vx, [I]
             case 0x0065 :
-                for (size_t i = 0; i <= opCode & 0x0F00; i++)
+                for (size_t i = 0; i <= (opCode & 0x0F00); i++)
                 {
                     _register[_index + i] = _register[i];
                 }    
