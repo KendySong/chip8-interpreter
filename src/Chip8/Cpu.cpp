@@ -122,7 +122,7 @@ void CPU::Update()
                 _x = (opCode & 0x0F00) >> 8;
                 _y = (opCode & 0x00F0) >> 4;          
                 _register[Chip8::REGISTER_SIZE - 1] = _register[_x] + _register[_y] > 255 ? 1 : 0;
-                _register[_x] = (_register[_x] + _register[_y]) & 0x00FF;
+                _register[_x] = ((_register[_x] + _register[_y]) & 0x00FF);
                 break;
 
             //SUB Vx, Vy
@@ -152,7 +152,7 @@ void CPU::Update()
             case 0x000E :
                 _x = (opCode & 0x0F00) >> 8;
                 _y = (opCode & 0x00F0) >> 4;
-                _register[Chip8::REGISTER_SIZE - 1] = (_register[_x] >> 7) & 0x0001;          
+                _register[Chip8::REGISTER_SIZE - 1] = ((_register[_x] >> 7) & 0x0001);          
                 _register[_x] <<= 1;
                 break;
             
@@ -273,7 +273,7 @@ void CPU::Update()
                 for (size_t i = 0; i <= (opCode & 0x0F00); i++)
                 {
                     _register[_index + i] = _register[i];
-                }    
+                }
                 break;
 
             default:
@@ -292,19 +292,6 @@ void CPU::Update()
         _isRunning = false;
         ConsoleLog::GetInstance()->AddLog("[INFO] program execution finished\n");
     }
-
-    //decrement increment timer values
-    if (_delayTimer.GetElapsedTime() > _timeAction && _delay > 0)
-    {
-        _delay--;
-        _sound--;
-    }
-
-    if (_sound > 0)
-    {
-        //Play bip sound
-    }
-    
 }
 
 void CPU::DrawSprite(std::uint16_t opCode)
@@ -387,7 +374,6 @@ void CPU::Pause() noexcept
 void CPU::Reset() noexcept
 {
     srand(time(nullptr));
-    _timeAction = 1 / Chip8::TIMER_FREQUENCY;
 
     _isRunning = false;
     _currentKeyDown = 0;
@@ -480,7 +466,6 @@ std::uint16_t CPU::GetIndex() noexcept
     return _index;
 }
 
-
 std::uint16_t CPU::GetProgramCounter() noexcept
 {
     return _programCounter;
@@ -494,6 +479,26 @@ std::uint8_t& CPU::GetSP() noexcept
 std::array<std::uint8_t, Chip8::REGISTER_SIZE>& CPU::GetRegister() noexcept
 {
     return _register;
+}
+
+std::uint8_t CPU::GetDelay() noexcept
+{
+    return _delay;
+}
+
+void CPU::SetDelay(std::uint8_t delay) noexcept
+{
+    _delay = delay;
+}
+
+std::uint8_t CPU::GetSound() noexcept
+{
+    return _sound;
+}
+
+void CPU::SetSound(std::uint8_t sound) noexcept
+{
+    _sound = sound;
 }
 
 std::array<std::uint16_t, Chip8::REGISTER_SIZE>& CPU::GetStack() noexcept

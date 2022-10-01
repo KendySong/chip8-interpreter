@@ -125,6 +125,34 @@ public :
     std::array<std::uint8_t, Chip8::REGISTER_SIZE>& GetRegister() noexcept;
 
     /**
+     * @brief Get the delay timer value
+     * 
+     * @return delay value
+     */
+    std::uint8_t GetDelay() noexcept;
+
+    /**
+     * @brief Set the delay timer value
+     * 
+     * @param new delay value
+     */
+    void SetDelay(std::uint8_t delay) noexcept;
+
+    /**
+     * @brief Get the sound timer value
+     * 
+     * @return sound value
+     */
+    std::uint8_t GetSound() noexcept;
+
+    /**
+     * @brief Set the sound timer value
+     * 
+     * @param new sound value
+     */
+    void SetSound(std::uint8_t sound) noexcept;
+
+    /**
      * @brief Get the stack for display
      * 
      * @return Stack array
@@ -156,8 +184,6 @@ private :
     std::array<std::uint8_t, Chip8::REGISTER_SIZE> _register;
 
     //Chip8 timer
-    float _timeAction;
-    Timer _delayTimer;
     std::uint8_t _delay;
     std::uint8_t _sound;
 

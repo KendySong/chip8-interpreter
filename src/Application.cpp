@@ -47,6 +47,8 @@ Application::Application()
     _guiComponents.emplace_back(&_screen); 
     _guiComponents.emplace_back(ConsoleLog::GetInstance());
     _guiComponents.emplace_back(&_stackViewer);
+
+    _timeAction = 1 / Chip8::TIMER_FREQUENCY;
 }
 
 Application* Application::GetInstance() noexcept
@@ -81,7 +83,20 @@ int Application::Run()
             CPU::GetInstance()->Update();
             _cpuLimit.Restart();
         }
-        
+
+        //Update timer
+        if (_delayTimer.GetElapsedTime() > _timeAction && CPU::GetInstance()->GetDelay() > 0)
+        {
+            CPU::GetInstance()->SetDelay(CPU::GetInstance()->GetDelay() - 1);
+            CPU::GetInstance()->SetSound(CPU::GetInstance()->GetSound() - 1);
+            _delayTimer.Restart();
+        }
+
+        if (CPU::GetInstance()->GetSound() > 0)
+        {
+            //Play bip sound
+        }
+               
         //Render       
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
         glClear(GL_COLOR_BUFFER_BIT);

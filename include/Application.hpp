@@ -58,7 +58,11 @@ private :
 
     unsigned int _fps;
     Timer _timerFps;
+
     Timer _cpuLimit;
+
+    float _timeAction;
+    Timer _delayTimer;
 
     //Instance gui components
     std::vector<Gui*> _guiComponents;
