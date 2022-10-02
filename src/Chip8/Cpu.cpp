@@ -413,6 +413,7 @@ void CPU::Reset() noexcept
         _memory[Chip8::CHARACTER_START_LOC + i] = characters[i];
     }
   
+     /*
     //Translate keyboard inputs
     _keyMap[glfwGetKeyScancode(GLFW_KEY_1)] = 1;
     _keyMap[glfwGetKeyScancode(GLFW_KEY_2)] = 2;
@@ -433,6 +434,7 @@ void CPU::Reset() noexcept
     _keyMap[glfwGetKeyScancode(GLFW_KEY_X)] = 0;
     _keyMap[glfwGetKeyScancode(GLFW_KEY_C)] = 0xB;
     _keyMap[glfwGetKeyScancode(GLFW_KEY_V)] = 0xF;
+    */
 }
 
 void CPU::ClearScreen() noexcept
