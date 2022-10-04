@@ -96,7 +96,7 @@ int Application::Run()
         {
             //Play bip sound
         }
-               
+
         //Render       
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
         glClear(GL_COLOR_BUFFER_BIT);

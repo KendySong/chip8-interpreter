@@ -198,7 +198,7 @@ void CPU::Update()
                 if (_register[(opCode & 0x0F00) >> 8] == _keyMap.at(_currentKeyDown) && (_actionKey == 1 || _actionKey == 2))
                 {
                     _programCounter += 2;
-                }            
+                }
                 break;
 
             //SKNP Vx
@@ -285,7 +285,7 @@ void CPU::Update()
         default :           
             LogUnknownInstruction(opCode);
             break;
-        }
+        }        
     }
     else if (_programCounter >= Chip8::MEMORY_SIZE)
     {
@@ -413,7 +413,7 @@ void CPU::Reset() noexcept
         _memory[Chip8::CHARACTER_START_LOC + i] = characters[i];
     }
   
-     /*
+    /*
     //Translate keyboard inputs
     _keyMap[glfwGetKeyScancode(GLFW_KEY_1)] = 1;
     _keyMap[glfwGetKeyScancode(GLFW_KEY_2)] = 2;
