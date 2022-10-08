@@ -4,8 +4,10 @@ An interpreter of Chip8 with debug functions like step by step, memory viewer an
 <img src="https://github.com/KendySong/chip8-interpreter/blob/master/screenshots/program.png">
 
 ## How to take the projet
+- The program compile with Visual Studio 2022 C++ compiler and MinGW GCC
+
 ```git
-git clone --recursive https://github.com/KendySong/chip8-interpreter.git
-cd chip8-interpreter
-cmake -Bbuild
+- git clone --recursive https://github.com/KendySong/chip8-interpreter.git
+- cd chip8-interpreter
+- cmake -Bbuild
 ```
