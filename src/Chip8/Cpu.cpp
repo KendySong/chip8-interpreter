@@ -255,7 +255,7 @@ void CPU::Update()
 
             //LD [I], Vx
             case 0x055 :
-                for (size_t i = 0; i <= (opCode & 0x0F00); i++)
+                for (size_t i = 0; i <= (opCode & 0x0F00) >> 8; i++)
                 {
                     _memory[_index + i] = _register[i];
                 }                   
@@ -263,9 +263,9 @@ void CPU::Update()
 
             //LD Vx, [I]
             case 0x0065 :
-                for (size_t i = 0; i <= (opCode & 0x0F00); i++)
+                for (size_t i = 0; i <= (opCode & 0x0F00) >> 8; i++)
                 {
-                    _register[_index + i] = _register[i];
+                    _register[i] = _memory[_index + i];
                 }
                 break;
 
