@@ -35,7 +35,6 @@ Application::Application()
     _guiComponents.emplace_back(&_cpuInfo);
     _guiComponents.emplace_back(&_disassembler);
     _guiComponents.emplace_back(&_keyboardHandler);
-    _guiComponents.emplace_back(MemoryViewer::GetInstance());
     _guiComponents.emplace_back(&_menu);
     _guiComponents.emplace_back(&_debugger);
     _guiComponents.emplace_back(&_screen); 

@@ -6,7 +6,6 @@
 #include "../Chip8/CPU.hpp"
 
 #include "ConsoleLog.hpp"
-#include "MemoryViewer.hpp"
 
 #pragma once
 

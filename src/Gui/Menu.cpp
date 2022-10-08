@@ -49,11 +49,9 @@ void Menu::ManageFileLoading()
             _fileReader.read(buffer, size);
             _fileReader.close();
 
-            MemoryViewer::GetInstance()->GetMemoryRom().reserve(size);
             for (size_t i = 0; i < size; i++)
             {
-                CPU::GetInstance()->GetMemory()[Chip8::PROGRAM_START_LOC + i] = buffer[i];
-                MemoryViewer::GetInstance()->GetMemoryRom().push_back(buffer[i]);
+                CPU::GetInstance()->GetMemory()[Chip8::PROGRAM_START_LOC + i] = buffer[i];             
             }
                        
             delete[] buffer;

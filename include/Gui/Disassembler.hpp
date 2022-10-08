@@ -2,8 +2,6 @@
 
 #include "../Chip8/CPU.hpp"
 
-#include "MemoryViewer.hpp"
-
 #pragma once
 
 /**

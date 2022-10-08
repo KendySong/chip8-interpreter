@@ -10,7 +10,6 @@
 #include "Gui/CpuInfo.hpp"
 #include "Gui/Disassembler.hpp"
 #include "Gui/KeyboardHandler.hpp"
-#include "Gui/MemoryViewer.hpp"
 #include "Gui/Menu.hpp"
 #include "Gui/Debugger.hpp"
 #include "Gui/Screen.hpp"
