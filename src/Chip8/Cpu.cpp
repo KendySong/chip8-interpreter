@@ -195,7 +195,7 @@ void CPU::Update()
             {
             //SKP Vx
             case 0x000E:
-                if (ImGui::IsKeyPressed(_keyMap.at(_register[(opCode & 0x0F00) >> 8])))
+                if (ImGui::IsKeyDown(_keyMap.at(_register[(opCode & 0x0F00) >> 8])))
                 {
                     _programCounter += 2;
                 }
@@ -203,7 +203,7 @@ void CPU::Update()
 
             //SKNP Vx
             case 0x0001:
-                if (!ImGui::IsKeyPressed(_keyMap.at(_register[(opCode & 0x0F00) >> 8])))
+                if (!ImGui::IsKeyDown(_keyMap.at(_register[(opCode & 0x0F00) >> 8])))
                 {
                     _programCounter += 2;
                 }
@@ -359,7 +359,7 @@ void CPU::WaitKeyPress(std::uint16_t opCode) noexcept
     bool isAnyKeyPressed = false;
     for (const auto& pair : _keyMap)
     {
-        if (ImGui::IsKeyPressed(pair.second))
+        if (ImGui::IsKeyDown(pair.second))
         {
             isAnyKeyPressed = true;
             _register[(opCode & 0x0F00) >> 8] = pair.first;
