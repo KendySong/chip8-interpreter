@@ -2,11 +2,6 @@
 
 Application* Application::_application = nullptr;
 
-void GetKeyInput(GLFWwindow* window, int key, int scancode, int action, int mods)
-{
-    CPU::GetInstance()->SetKeyInput(scancode, action);  
-}
-
 Application::Application()
 {
     _fps = 0;
@@ -17,7 +12,6 @@ Application::Application()
     glfwWindowHint(GL_MINOR_VERSION, 4);
     glfwWindowHint(GL_MAJOR_VERSION, 4);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    glfwSetKeyCallback(_window, GetKeyInput);
     glfwMakeContextCurrent(_window);
 
     //Load OpenGL and shaders

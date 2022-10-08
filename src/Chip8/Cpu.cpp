@@ -195,7 +195,7 @@ void CPU::Update()
             {
             //SKP Vx
             case 0x000E:
-                if (_register[(opCode & 0x0F00) >> 8] == _keyMap.at(_currentKeyDown) && (_actionKey == 1 || _actionKey == 2))
+                if (ImGui::IsKeyPressed(_keyMap.at(_register[(opCode & 0x0F00) >> 8])))
                 {
                     _programCounter += 2;
                 }
@@ -203,7 +203,7 @@ void CPU::Update()
 
             //SKNP Vx
             case 0x0001:
-                if (_register[(opCode & 0x0F00) >> 8] != _keyMap.at(_currentKeyDown))
+                if (!ImGui::IsKeyPressed(_keyMap.at(_register[(opCode & 0x0F00) >> 8])))
                 {
                     _programCounter += 2;
                 }
@@ -225,14 +225,7 @@ void CPU::Update()
             
             //LD Vx, K
             case 0x000A :
-                if (_actionKey == 0)
-                {
-                    _programCounter -= 2;
-                }
-                else if (_keyMap.find(_currentKeyDown) != _keyMap.end())
-                {
-                    _register[(opCode & 0x0F00) >> 8] = _keyMap.at(_currentKeyDown);
-                }
+                WaitKeyPress(opCode);
                 break;
 
             //LD DT, Vx
@@ -361,6 +354,24 @@ void CPU::StoreBCD(std::uint8_t opCode)
     _memory[_index] = vx;
 }
 
+void CPU::WaitKeyPress(std::uint16_t opCode) noexcept
+{
+    bool isAnyKeyPressed = false;
+    for (const auto& pair : _keyMap)
+    {
+        if (ImGui::IsKeyPressed(pair.second))
+        {
+            isAnyKeyPressed = true;
+            _register[(opCode & 0x0F00) >> 8] = pair.first;
+        }                
+    }
+
+    if (!isAnyKeyPressed)
+    {
+        _programCounter -= 2;
+    }
+}
+
 void CPU::Run() noexcept
 {
     _isRunning = true;
@@ -376,8 +387,6 @@ void CPU::Reset() noexcept
     srand(time(nullptr));
 
     _isRunning = false;
-    _currentKeyDown = 0;
-    _actionKey = 0;
     _index = 0;
     _sp = 0;
     _programCounter = Chip8::PROGRAM_START_LOC;
@@ -413,28 +422,26 @@ void CPU::Reset() noexcept
         _memory[Chip8::CHARACTER_START_LOC + i] = characters[i];
     }
   
-    /*
     //Translate keyboard inputs
-    _keyMap[glfwGetKeyScancode(GLFW_KEY_1)] = 1;
-    _keyMap[glfwGetKeyScancode(GLFW_KEY_2)] = 2;
-    _keyMap[glfwGetKeyScancode(GLFW_KEY_3)] = 3;
-    _keyMap[glfwGetKeyScancode(GLFW_KEY_4)] = 0xC;
+    _keyMap[1]   = ImGuiKey_1;
+    _keyMap[2]   = ImGuiKey_2;
+    _keyMap[3]   = ImGuiKey_3;
+    _keyMap[0xC] = ImGuiKey_4;
 
-    _keyMap[glfwGetKeyScancode(GLFW_KEY_Q)] = 4;
-    _keyMap[glfwGetKeyScancode(GLFW_KEY_W)] = 5;
-    _keyMap[glfwGetKeyScancode(GLFW_KEY_E)] = 6;
-    _keyMap[glfwGetKeyScancode(GLFW_KEY_R)] = 0xD;
+    _keyMap[4]   = ImGuiKey_Q;
+    _keyMap[5]   = ImGuiKey_W;
+    _keyMap[6]   = ImGuiKey_E;
+    _keyMap[0xD] = ImGuiKey_R;
 
-    _keyMap[glfwGetKeyScancode(GLFW_KEY_A)] = 7;
-    _keyMap[glfwGetKeyScancode(GLFW_KEY_S)] = 8;
-    _keyMap[glfwGetKeyScancode(GLFW_KEY_D)] = 9;
-    _keyMap[glfwGetKeyScancode(GLFW_KEY_F)] = 0xE;
+    _keyMap[7]   = ImGuiKey_A;
+    _keyMap[8]   = ImGuiKey_S;
+    _keyMap[9]   = ImGuiKey_D;
+    _keyMap[0XE] = ImGuiKey_F;
 
-    _keyMap[glfwGetKeyScancode(GLFW_KEY_Z)] = 0xA;
-    _keyMap[glfwGetKeyScancode(GLFW_KEY_X)] = 0;
-    _keyMap[glfwGetKeyScancode(GLFW_KEY_C)] = 0xB;
-    _keyMap[glfwGetKeyScancode(GLFW_KEY_V)] = 0xF;
-    */
+    _keyMap[0xA] = ImGuiKey_Z;
+    _keyMap[0]   = ImGuiKey_X;
+    _keyMap[0xB] = ImGuiKey_C;
+    _keyMap[0xF] = ImGuiKey_V;
 }
 
 void CPU::ClearScreen() noexcept
@@ -450,12 +457,6 @@ void CPU::LogUnknownInstruction(std::uint16_t opCode) noexcept
     char errorMessage[42];
     snprintf(errorMessage, sizeof(errorMessage), "[ERROR] instruction 0x%X not recognize\n", opCode);
     ConsoleLog::GetInstance()->AddLog(errorMessage);
-}
-
-void CPU::SetKeyInput(int scanCode, int action)
-{
-    _currentKeyDown = scanCode;
-    _actionKey = action;
 }
 
 bool CPU::GetIsRunning() noexcept

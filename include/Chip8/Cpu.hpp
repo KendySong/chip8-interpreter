@@ -9,9 +9,7 @@
 #include <glfw/glfw3.h>
 
 #include "Timer.hpp"
-
 #include "../Gui/ConsoleLog.hpp"
-
 #include "Settings.hpp"
 
 #pragma once
@@ -37,6 +35,8 @@ public :
      */
     void Update();
 
+private :
+
     /**
      * @brief Draw a sprite at the emplacement given in opCode
      * 
@@ -50,6 +50,14 @@ public :
      * @param opCode => instruction with parameters (Fx33 - LD B, Vx)
      */
     void StoreBCD(std::uint8_t opCode);
+
+    /**
+     * @brief Stop execution if any key is pressed
+     * 
+     * @param Fx0A store key value into VX
+     */
+    void WaitKeyPress(std::uint16_t opCode) noexcept;
+public :
 
     /**
      * @brief Set on the cpu
@@ -82,13 +90,7 @@ public :
      */
     void LogUnknownInstruction(std::uint16_t opCode) noexcept;
 
-     /**
-     * @brief Set the Key Input object
-     * 
-     * @param scanCode => keyboard key emplacement
-     * @param action => define if key is pressed, down or up
-     */
-    void SetKeyInput(int scanCode, int action);
+public :
 
     /**
      * @brief Get the cpu state
@@ -188,10 +190,7 @@ private :
     //Chip8 timer
     std::uint8_t _delay;
     std::uint8_t _sound;
-
-    std::map<std::uint8_t, std::uint8_t> _keyMap;
-    int _currentKeyDown;
-    int _actionKey;
+    std::map<std::uint8_t, unsigned int> _keyMap;
 
     std::uint8_t _sp;
     std::array<std::uint16_t, Chip8::REGISTER_SIZE> _stack;
